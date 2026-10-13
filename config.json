@@ -1,0 +1,6 @@
+{
+  "supabaseUrl": "PASTE-YOUR-PROJECT-URL",
+  "supabaseAnonKey": "PASTE-YOUR-PUBLISHABLE-KEY",
+  "team": true,
+  "demo": true
+}

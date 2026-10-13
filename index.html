@@ -748,6 +748,87 @@
   .cfgOpt span { font-size:12px; color:var(--mute); } .cfgOpt em { font-size:11px; font-style:normal; }
   .cfgOpt.on { border-color:var(--brand); background:var(--brand-soft); } .cfgOpt:hover { border-color:var(--brand); }
   .cfgBan { margin-bottom:12px; border-left:3px solid var(--brand); }
+
+/* ---------- Harim: readiness, history, spreadsheet upload, dashboard ---------- */
+.rdHead { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.rdHead h1 { margin-bottom:4px; } .rdHead .muted { max-width:720px; }
+.rdFilters { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin:14px 0 4px; font-size:13px; }
+.rdFilters label { display:flex; gap:6px; align-items:center; color:var(--mute); }
+.rdTbl td, .rdTbl th { vertical-align:middle; } .num { text-align:right; font-variant-numeric:tabular-nums; }
+.rdTbl tr.on td { background:var(--brand-soft); }
+.rdBar { display:inline-block; vertical-align:middle; width:calc(100% - 64px); max-width:260px; min-width:80px; height:8px; border-radius:4px; background:var(--surface-3); overflow:hidden; }
+.rdBar i { display:block; height:100%; border-radius:4px; background:var(--ok); }
+.rdBar.mid i { background:var(--warn); } .rdBar.low i { background:var(--danger); }
+.rdPctTxt { font-variant-numeric:tabular-nums; font-size:12.5px; margin-left:6px; }
+.rdDet { margin-top:22px; } .rdDet h2 { margin:0 0 4px; } .rdDet h3 { margin:14px 0 8px; font-size:14px; }
+.rdBlk { display:flex; flex-direction:column; gap:3px; max-width:720px; }
+.rdBlkRow { display:grid; grid-template-columns:minmax(150px, 260px) 1fr 70px; gap:10px; align-items:center; border:0; background:none; padding:5px 8px; border-radius:6px; text-align:left; font:inherit; font-size:13px; color:var(--ink); cursor:pointer; }
+.rdBlkRow:hover { background:var(--surface-2); } .rdBlkRow.on { background:var(--brand-soft); } .rdBlkRow.static { cursor:default; } .rdBlkRow.static:hover { background:none; }
+.rdBlkName { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rdBlkBar { height:8px; background:var(--surface-3); border-radius:4px; overflow:hidden; } .rdBlkBar i { display:block; height:100%; background:var(--brand); border-radius:4px; }
+.rdBlkN { text-align:right; font-variant-numeric:tabular-nums; color:var(--mute); }
+.rdTools { display:flex; align-items:center; gap:10px; margin:16px 0 0; flex-wrap:wrap; }
+.rdMiss { display:inline-block; font-size:12px; padding:1px 8px; border-radius:10px; background:var(--surface-3); color:var(--ink); margin:1px 2px 1px 0; }
+.rdMiss.bad { background:color-mix(in srgb, var(--warn) 16%, transparent); color:var(--warn); }
+.rdOk { color:var(--ok); font-weight:600; }
+.rdPager { margin-top:10px; display:flex; gap:10px; align-items:center; font-size:13px; }
+.rdEd { margin:12px 0; } .rdEdH { margin-bottom:4px; font-size:13.5px; }
+.rdEd textarea { width:100%; font:12.5px/1.5 ui-monospace, Menlo, Consolas, monospace; resize:vertical; }
+.rdEdGrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:0 18px; }
+.rdEdBad { color:var(--warn); font-size:12px; margin-top:2px; }
+.rdEdBar { position:sticky; bottom:0; display:flex; gap:8px; align-items:center; padding:12px 0; background:var(--bg, var(--surface-2)); border-top:1px solid var(--line); }
+.rdStrip { display:flex; flex-wrap:wrap; gap:5px; margin:8px 0 2px; }
+.rdChip { border:1px solid transparent; border-radius:12px; padding:2px 9px; font-size:12px; font-weight:600; cursor:pointer; font-variant-numeric:tabular-nums; }
+.rdChip.ok { background:color-mix(in srgb, var(--ok) 13%, transparent); color:var(--ok); }
+.rdChip.mid { background:color-mix(in srgb, var(--warn) 14%, transparent); color:var(--warn); }
+.rdChip.low { background:color-mix(in srgb, var(--danger) 13%, transparent); color:var(--danger); }
+.stExtra { padding:14px 2px; }
+.hist .histEmpty, .dashEmpty { padding:14px; border:1px dashed var(--line); border-radius:8px; color:var(--mute); }
+.histCard { border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin:10px 0; background:var(--surface); }
+.histTop { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.histSteps { font-size:12px; margin:6px 0 2px; color:var(--ink); }
+.histTbl { width:100%; border-collapse:collapse; margin-top:8px; font-size:12.5px; }
+.histTbl th { text-align:left; color:var(--mute); font-weight:600; border-bottom:1px solid var(--line); padding:4px 6px; }
+.histTbl td { border-bottom:1px solid var(--line); padding:5px 6px; vertical-align:top; word-break:break-word; }
+.histOld { color:var(--mute); text-decoration:line-through; text-decoration-color:color-mix(in srgb, var(--mute) 60%, transparent); }
+.histNew { font-weight:600; }
+.histPim { margin-top:14px; padding:10px 14px; background:var(--surface-2); border-radius:8px; font-size:12.5px; display:grid; gap:3px; }
+#rvUpNote { padding:0 14px; }
+.rtNote { display:flex; gap:14px; align-items:flex-start; margin:8px 0; padding:10px 14px; border-radius:8px; background:var(--brand-softer, var(--surface-2)); border:1px solid var(--brand-soft, var(--line)); font-size:13px; }
+.rtNote > div { flex:1; } .rtNote ul { margin:6px 0 0 18px; padding:0; color:var(--mute); }
+.dash h1 { margin-bottom:2px; }
+.dashTiles { display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:12px; margin:18px 0; }
+.dashTile { text-align:left; border:1px solid var(--line); border-left:4px solid var(--brand); background:var(--surface); border-radius:8px; padding:12px 14px; cursor:pointer; font:inherit; color:var(--ink); display:flex; flex-direction:column; gap:2px; }
+.dashTile:hover { box-shadow:var(--shadow); } .dashTile.hot { border-left-color:var(--accent); } .dashTile.warnT { border-left-color:var(--warn); }
+.dashTile span { font-size:12.5px; color:var(--mute); font-weight:600; } .dashTile b { font-size:26px; font-weight:750; font-variant-numeric:tabular-nums; }
+.dashTile em { font-style:normal; font-size:12px; color:var(--mute); }
+.dashGrid { display:grid; grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); gap:14px; align-items:start; }
+.dashCol { display:flex; flex-direction:column; gap:14px; min-width:0; }
+@media (max-width:700px) { .dashGrid { grid-template-columns:1fr; } }
+.dashCard { background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:14px 16px; min-width:0; }
+.dashCard h2 { font-size:15px; margin:0 0 8px; } .dashCardH { display:flex; justify-content:space-between; align-items:baseline; }
+.dashReqs { display:flex; flex-direction:column; gap:2px; }
+.dashReq { display:flex; gap:10px; align-items:center; border:0; background:none; padding:7px 6px; border-radius:6px; text-align:left; font:inherit; font-size:13px; color:var(--ink); cursor:pointer; }
+.dashReq:hover { background:var(--surface-2); } .dashReqT { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .dashAgo { font-size:12px; white-space:nowrap; }
+.dashCh { width:100%; border-collapse:collapse; font-size:13px; } .dashCh td { padding:4px 4px; } .dashCh tr { cursor:pointer; } .dashCh tr:hover td { background:var(--surface-2); }
+.dashCh td:first-child { white-space:nowrap; width:1%; padding-right:12px; } .dashCh td:last-child { white-space:nowrap; width:1%; font-size:12px; }
+.dashTrendHead { font-size:13px; margin-bottom:4px; } .dashTrendHead b { font-size:20px; margin-right:6px; }
+.dashTrendHead .up { color:var(--ok); font-weight:600; } .dashTrendHead .down { color:var(--danger); font-weight:600; }
+.dashTrend { width:100%; height:auto; display:block; }
+.dashTrend .g { stroke:var(--line); stroke-width:1; } .dashTrend .ax { fill:var(--mute); font-size:10px; font-variant-numeric:tabular-nums; }
+.dashTrend .ln { fill:none; stroke:var(--brand); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
+.dashTrend .pt { fill:var(--brand); stroke:var(--surface); stroke-width:2; } .dashTrend .last { fill:var(--brand); stroke:var(--surface); stroke-width:2; }
+.dashMore { margin-top:18px; }
+.sbMsg { margin-top:12px; padding:10px 12px; border-radius:8px; background:color-mix(in srgb, var(--ok) 12%, transparent); color:var(--ink); font-size:13px; }
+.sbLinks { display:flex; flex-wrap:wrap; gap:4px 8px; align-items:center; justify-content:center; margin-top:12px; font-size:13px; }
+.sbLinks .lk { padding:0; }
+.sbPill { font-size:11.5px; font-weight:650; padding:3px 10px; border-radius:12px; margin-right:10px; white-space:nowrap; cursor:default; }
+.sbPill.team { background:color-mix(in srgb, var(--ok) 22%, transparent); color:#fff; }
+.sbPill.demo { background:color-mix(in srgb, var(--accent) 30%, transparent); color:#fff; }
+.sbNote { margin:16px 24px 0; padding:10px 14px; border-radius:8px; background:var(--brand-softer, var(--surface-2)); border:1px solid var(--brand-soft, var(--line)); font-size:13px; max-width:900px; }
+#v-import .page > #sbFiles { margin-bottom:16px; } #v-import .page > #sbFiles .sbNote { margin:0 0 12px; }
+.sbFilesCard { max-width:900px; } .sbFT { border-collapse:collapse; margin:6px 0 10px; font-size:13px; } .sbFT td { padding:4px 14px 4px 0; }
+.sbUp { display:inline-block; cursor:pointer; padding:6px 14px; border-radius:8px; font-weight:600; font-size:13px; } .dashMore summary { cursor:pointer; color:var(--mute); font-weight:600; }
 </style>
 </head>
 <body>
@@ -763,6 +844,7 @@
   <div class="sep apps"></div>
   <div class="nv" data-s="home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg>Home</div>
   <div class="nv" data-s="review"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H9l-5 4z"/><path d="M8.5 12.5l6-6 1.5 1.5-6 6-2 .5z"/></svg>Review</div>
+  <div class="nv" data-s="ready"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7"/><path d="M14.5 8.5l2 2 4-4"/></svg>Readiness</div>
   <div class="sep"></div>
   <div class="nv" data-s="cmhome"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/></svg>My items <span class="nbadge" id="cmBadge" style="display:none"></span></div>
   <div class="nv" data-s="cmsubmit"><svg viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5L12 4l4.5 4.5"/><path d="M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>Submit items</div>
@@ -802,6 +884,7 @@
   <section class="view" id="v-home"><div class="page" id="homeBody"></div></section>
 
   <!-- Review -->
+  <section class="view" id="v-ready"><div class="page" id="readyBody"></div></section>
   <section class="view" id="v-review"><div class="page">
     <h1>Review</h1>
     <p class="muted">Select products on the Products page, then open them side by side.</p>
@@ -809,6 +892,9 @@
       <button class="primary" id="revNavReview" disabled>Review selected (0)</button>
       <button class="outline" id="revNavExport" disabled>Export selected...</button>
     </div>
+    <h2 style="margin-top:28px">Edit in a spreadsheet</h2>
+    <p class="muted" style="max-width:680px">Open items in the Review grid and download them with <b>Excel</b>. Change values in Excel, keep the first column (Item Number), then upload the file here. Harim compares every cell with the current value and opens what changed in the Review grid, where you check it and save it to your draft for approval.</p>
+    <button class="outline" id="revNavUpload">&#8679; Upload edited spreadsheet...</button>
   </div></section>
 
   <!-- Admin: Data Import -->
@@ -893,6 +979,7 @@
       <button class="lk" id="pasteIds">Paste IDs / part numbers...</button>
       <button class="lk" id="clearSel">Clear selection</button>
       <button class="lk" id="exportBtn">Download filtered table (CSV)</button>
+      <button class="lk" id="ptUpload" title="Upload an edited Excel or CSV (Item Number or ID in the first column). Changes open in the Review grid for your draft.">Upload edited spreadsheet...</button>
       <button class="lk" id="ptColsBtn">Columns...</button>
       <span style="flex:1"></span><span id="ptStat" class="muted"></span>
       <button class="outline" id="cfgSelBtn" disabled title="Run a PIM configuration (CFG_Discontinue, CFG_Reactivate...) on the selected items">Run configuration...</button>
@@ -933,7 +1020,8 @@
       <button class="ic" id="rvCols" title="Show / hide attribute groups">&#9707; Columns</button>
       <span class="muted" id="rvInfo"></span>
       <span style="flex:1"></span>
-      <button class="ic" id="rvXlsx" title="Download what you see, with your edits, plus an Edits sheet">&#8681; Excel</button>
+      <button class="ic" id="rvXlsx" title="Download what you see, with your edits, plus an Edits sheet. Edit it in Excel and use Upload edits to bring it back.">&#8681; Excel</button>
+      <button class="ic" id="rvUpload" title="Upload an edited Excel or CSV: changed cells come into this grid">&#8679; Upload edits</button>
       <button class="ic" id="rvDownload" title="Download CSV">&#8681; CSV</button>
       <button class="ic" id="rvClose">&#10005;</button>
       <div id="rvChooser"></div>
@@ -1178,6 +1266,7 @@ function showSection(name) {
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id === "v-" + name));
   $("#ctx").classList.toggle("on", name === "attributes");
   if (name === "home") renderHome();
+  if (name === "ready") renderReady();
   if (name === "import") renderFiles();
   if (name === "taxonomy") renderTaxonomy();
   if (name === "vendors") renderVendors();
@@ -1373,7 +1462,7 @@ function masterReady(msg) {
   sidKey = Array.from({length: N}, (_, i) => sidOf(getVal("Supplier ID", i)));
   sidSet = new Set(sidKey); sidSet.delete(""); optsCache = null;
   setStatus(msg);
-  matchLovCols(); refreshTaxFilters(); sortCol = null; sortKeys = []; colF = {}; ptSel = null; applyFilters(); showSection("products");
+  matchLovCols(); refreshTaxFilters(); sortCol = null; sortKeys = []; colF = {}; ptSel = null; applyFilters(); showSection((!portal || portal === "pdm") && sectionAllowed("home") ? "home" : "products");
 }
 /* a database source hands over the master list here instead of the CSV loader */
 function indexMasterList({head, rows, extra: ex}) {
@@ -2286,27 +2375,6 @@ $("#attrBody").addEventListener("click", async e => {
 });
 
 /* ---------- home + taxonomy ---------- */
-function renderHome() {
-  if (!master) { $("#homeBody").innerHTML = '<h1>Home</h1><p class="muted">Open <b>Admin &rsaquo; Data Import</b> and choose your export folder to get started.</p>'; return; }
-  const fills = columns.map(c => ({c, f: attrFill(c)})).filter(x => x.f);
-  const avg = fills.length ? fills.reduce((s, x) => s + x.f.pct, 0) / fills.length : 0;
-  const low = [...fills].sort((a, b) => a.f.pct - b.f.pct).slice(0, 10);
-  $("#homeBody").innerHTML = `<h1>Home</h1><div class="muted">Catalog overview</div>
-    <div class="cards">
-      <div class="stat"><b>${master.rows.length.toLocaleString()}</b>Products</div>
-      <div class="stat"><b>${files.length}</b>Files loaded</div>
-      <div class="stat"><b>${columns.length}</b>Attributes in data</div>
-      <div class="stat"><b>${groups ? Object.keys(groups).length : "-"}</b>Attribute groups</div>
-      <div class="stat"><b>${avg.toFixed(1)}%</b>Average fill rate</div>
-      <div class="stat"><b>${selected.size.toLocaleString()}</b>Selected products</div>
-      ${taxTree ? `<div class="stat"><b>${taxTree.subs.length}</b>Subcategories in tree</div>` : ""}
-      ${vendors ? `<div class="stat"><b>${vendors.length}</b>Vendors aligned</div>` : ""}
-      ${lov ? `<div class="stat"><b>${lov.length}</b>Attributes with a list of values</div>` : ""}
-    </div>
-    <h2>Least complete attributes</h2>
-    <div class="tbl2"><table><tr><th>Attribute</th><th>Source file</th><th>Fill %</th></tr>${low.map(x =>
-      `<tr><td>${esc(x.c)}</td><td>${esc(x.f.file)}</td><td><span class="bar"><i style="width:${x.f.pct}%"></i></span> ${x.f.pct.toFixed(1)}%</td></tr>`).join("")}</table></div>`;
-}
 /* ---------- Excel reference files (category tree, vendor alignment) ---------- */
 async function readSheet(f) {
   if (typeof XLSX === "undefined") throw new Error("Excel library did not load (internet needed for the CDN).");
@@ -3287,7 +3355,7 @@ async function openReview() {
   $("#review").classList.add("open");
   $("#rvWrap").innerHTML = '<p class="pad muted" id="rvLoad">Loading items...</p>';
   rv.items = await loadItems(idxs, (a, b) => { const el = $("#rvLoad"); if (el) el.textContent = `Loading items... ${a} / ${b}`; });
-  rv.filters = {}; rv.mode = "grid"; rv.fields = "all"; rvLoadDraft();
+  rv.filters = {}; rv.mode = "grid"; rv.fields = "all"; rv.onlyEdited = false; rv.upload = null; rtNote(); rvLoadDraft();
   document.querySelectorAll("#rvMode button").forEach(b => b.classList.toggle("on", b.dataset.m === "grid"));
   buildReview();
 }
@@ -3335,8 +3403,9 @@ function renderReviewTable() {
   }
 }
 function fillReviewBody(keep) {
-  const cols = rv.cols;
+  const cols = rv.cols, edIdx = rv.onlyEdited ? new Set([...rv.edits.keys()].map(k => k.split("\u0000")[0])) : null;
   const rows = rv.items.filter(it => {
+    if (edIdx && !edIdx.has(String(it.idx))) return false;
     if (rv.filters.__id && !itemLabel(it).toLowerCase().includes(rv.filters.__id.toLowerCase())) return false;
     return cols.every(c => !rv.filters[c.name] || curVal(it, c.name).toLowerCase().includes(rv.filters[c.name].toLowerCase()));
   });
@@ -5354,8 +5423,12 @@ function wsSave() {
 }
 async function wsInit() {
   await PIMData.init();
-  const saved = await PIMData.loadWorkspace();
-  if (saved && saved.users && saved.roles) ws = Object.assign(defaultWs(), saved);
+  try { wsApply(await PIMData.loadWorkspace()); } catch (e) { wsApply(null); setStatus("Couldn't load the workspace: " + e.message); }
+  if (typeof sbAfterLoad === "function") sbAfterLoad();
+  sessionStart();
+}
+function wsApply(saved) {
+  ws = saved && saved.users && saved.roles ? Object.assign(defaultWs(), saved) : defaultWs();
   ws.settings = Object.assign({selfApprove: true}, ws.settings || {});
   if (!ws.settings.salesreqSet) {   /* one-time: quick sale requests permission + Sales role */
     ws.roles.forEach(r => { if ((r.perms.includes("itemload") || r.id === "admin" || r.id === "cm") && !r.perms.includes("salesreq")) r.perms.push("salesreq"); });
@@ -5379,7 +5452,6 @@ async function wsInit() {
     ws.settings.pdmEditSet = true; wsSave();
   }
   if (!ws.settings.cmSet) { ws.roles.forEach(r => { if ((r.id === "admin" || r.id === "cm") && !r.perms.includes("cmsubmit")) r.perms.push("cmsubmit"); }); ws.settings.cmSet = true; wsSave(); }
-  sessionStart();
 }
 
 /* ---------- who am I, what can I do ---------- */
@@ -5399,7 +5471,7 @@ function audit(action, target, detail) {
   if (ws.audit.length > 25000) ws.audit.splice(0, ws.audit.length - 25000);
   wsSave();
 }
-const SECTION_PERM = {home: ["view"], review: ["view"], products: ["view"], taxonomy: ["view"], vendors: ["view"], attributes: ["view"], salesreq: ["salesreq"], updreq: ["salesreq", "edit", "itemload"], newlist: ["salesreq", "cmsubmit", "view"], stepcfg: ["data", "users", "edit"], itemload: ["itemload"], workflow: ["edit", "brand", "itemload", "approve"], import: ["data"], rules: ["data"], exports: ["export"], team: ["itemload", "approve", "users"], pricing: ["pricing"], buys: ["initorder", "supply"], cmhome: ["cmsubmit"], cmsubmit: ["cmsubmit"], reports: ["data", "users"], groups: ["view"], config: ["data", "users"], users: ["users"], audit: ["users"]};
+const SECTION_PERM = {home: ["view"], ready: ["view"], review: ["view"], products: ["view"], taxonomy: ["view"], vendors: ["view"], attributes: ["view"], salesreq: ["salesreq"], updreq: ["salesreq", "edit", "itemload"], newlist: ["salesreq", "cmsubmit", "view"], stepcfg: ["data", "users", "edit"], itemload: ["itemload"], workflow: ["edit", "brand", "itemload", "approve"], import: ["data"], rules: ["data"], exports: ["export"], team: ["itemload", "approve", "users"], pricing: ["pricing"], buys: ["initorder", "supply"], cmhome: ["cmsubmit"], cmsubmit: ["cmsubmit"], reports: ["data", "users"], groups: ["view"], config: ["data", "users"], users: ["users"], audit: ["users"]};
 const firstAllowed = () => ["products", "home", "salesreq", "itemload", "workflow"].find(x => (!SECTION_PERM[x] || SECTION_PERM[x].some(can)) && (x !== "products" || master)) || "home";
 const sectionAllowed = s => !SECTION_PERM[s] || SECTION_PERM[s].some(can);
 function applyUser() {
@@ -7113,12 +7185,13 @@ function stepHelp(a, extra) {
 /* fields: [{name, section, value, required, ro, roWhy, list, issue:{lvl:"err"|"warn"|"needs", msg}, note, html, hide}] */
 function stepFormHtml(id, fields, opt = {}) {
   const sections = [...new Set(fields.map(f => f.section))];
-  const tabs = stepTabs(sections, opt.firstTab);
+  const tabs = [...stepTabs(sections, opt.firstTab), ...(opt.extraTabs || []).map(t => ({name: t.name, groups: [], extra: t}))];
   let act = stepActive[id]; if (!tabs.some(t => t.name === act)) act = stepActive[id] = tabs[0] ? tabs[0].name : "";
-  const badge = t => fields.filter(f => t.groups.includes(f.section) && f.issue).length;
+  const badge = t => t.extra ? t.extra.badge || 0 : fields.filter(f => t.groups.includes(f.section) && f.issue).length;
   let h = `<div class="stTabs" data-stid="${id}">` + tabs.map(t => { const n = badge(t);
     return `<button class="stTab ${t.name === act ? "on" : ""}" data-sttab="${esc(t.name)}">${esc(t.name)}${n ? `<span class="stBadge" title="${n} to look at">${n}</span>` : ""}</button>`; }).join("") + "</div>";
   const tab = tabs.find(t => t.name === act); if (!tab) return h + '<p class="muted">Nothing to show.</p>';
+  if (tab.extra) return h + `<div class="stExtra">${tab.extra.render()}</div>`;
   const secs = tab.groups.map(g => ({g, rows: fields.filter(f => f.section === g && !f.hide)})).filter(s => s.rows.length || s.extra);
   /* balance the two columns by row count */
   const cols = [[], []], w = [0, 0];
@@ -7185,8 +7258,8 @@ function renderItemView() {
         ${(() => { const fg = window.FAM_ON && famOfId(selItem.id); return fg ? ` &middot; <a class="lk" style="padding:0" data-famopen="${esc(fg.id)}" title="Open the item group">Item group: ${esc(fg.name)} (${fg.ids.length})</a>` : ""; })()}
         &middot; <label class="chk2" style="display:inline-flex"><input type="checkbox" id="hideEmpty" ${hideEmpty ? "checked" : ""}> Hide empty</label>
         ${can("edit") ? '<span class="muted"> &middot; changes go into your draft for approval</span>' : ""}</div>
-      ${vendorBox(item["Supplier ID"])}</div>
-    <div data-stform="item">${stepFormHtml("item", fields, {editable: true, sectionExtra: s => s === "Related rows" ? relHtml : ""})}</div>`;
+      ${rdStripHtml(selItem.idx)}${vendorBox(item["Supplier ID"])}</div>
+    <div data-stform="item">${stepFormHtml("item", fields, {editable: true, sectionExtra: s => s === "Related rows" ? relHtml : "", extraTabs: ITEM_EXTRA_TABS()})}</div>`;
   $("#hideEmpty").onchange = e => { hideEmpty = e.target.checked; renderItemView(); };
 }
 /* put one change (plus linked translations / calculations) in the user's draft */
@@ -7301,7 +7374,7 @@ function paintThemeBtn() { const d = document.documentElement.dataset.theme === 
     : '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>'; }
 $("#themeBtn").addEventListener("click", () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark"));
 paintThemeBtn();
-const PAGE_TITLES = {home: "Home", review: "Review", salesreq: "Quick sale request", updreq: "Item update request", newlist: "New items", stepcfg: "PIM configurations", itemload: "Item load", workflow: "Workflow", products: "Products", taxonomy: "Taxonomy", vendors: "Vendors", attributes: "Attributes", import: "Data import", rules: "Field rules", exports: "Exports", team: "Team", pricing: "Pricing queue", buys: "Initial orders", cmhome: "My items", cmsubmit: "Submit items", reports: "Reports", config: "Configuration", users: "Users & roles", audit: "Audit log"};
+const PAGE_TITLES = {home: "Home", review: "Review", ready: "Channel readiness", salesreq: "Quick sale request", updreq: "Item update request", newlist: "New items", stepcfg: "PIM configurations", itemload: "Item load", workflow: "Workflow", products: "Products", taxonomy: "Taxonomy", vendors: "Vendors", attributes: "Attributes", import: "Data import", rules: "Field rules", exports: "Exports", team: "Team", pricing: "Pricing queue", buys: "Initial orders", cmhome: "My items", cmsubmit: "Submit items", reports: "Reports", config: "Configuration", users: "Users & roles", audit: "Audit log"};
 const _showSectionT = showSection;
 showSection = function (name) { _showSectionT(name); $("#pageTitle").textContent = PAGE_TITLES[section] || ""; };
 $("#pageTitle").textContent = PAGE_TITLES[section] || "";
@@ -7968,12 +8041,12 @@ $("#exportsBody").addEventListener("change", async e => {
 const PORTALS = [
   {id: "sales", name: "Sales", color: "#2f5fd0", desc: "See new items, ask the product data team to set up a quick sale item or fix wrong item data, and follow your requests.", sections: ["salesreq", "updreq", "newlist"],
     icon: '<path d="M5 4h14v16l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M9 9h6M9 13h4"/>'},
-  {id: "cm", name: "Category Managers", need: "cmsubmit", color: "#0e7490", desc: "Send supplier item files to the data team and follow your items, single items and quick sales through to online.", sections: ["cmhome", "newlist", "cmsubmit", "salesreq", "updreq", "buys"],
+  {id: "cm", name: "Category Managers", need: "cmsubmit", color: "#0e7490", desc: "Send supplier item files to the data team and follow your items, single items and quick sales through to online.", sections: ["cmhome", "ready", "newlist", "cmsubmit", "salesreq", "updreq", "buys"],
     icon: '<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5"/><path d="M15 6h6M15 10h6M17 14h4"/>'},
   {id: "supply", name: "Supply Chain", color: "#b25e09", desc: "Initial orders on new items: category managers order, Supply Chain places them in ERP.", sections: ["buys"],
     icon: '<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>'},
   {id: "pdm", name: "Product Data Management", color: "var(--brand)", desc: "Products, item groups, item loads, review, workflow, team work, exports, taxonomy, vendors and attributes.",
-    sections: ["home", "review", "itemload", "updreq", "workflow", "team", "exports", "products", "groups", "taxonomy", "vendors", "attributes"],
+    sections: ["home", "ready", "review", "itemload", "updreq", "workflow", "team", "exports", "products", "groups", "taxonomy", "vendors", "attributes"],
     icon: '<path d="M4 7l8-4 8 4-8 4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/>'},
   {id: "pricing", name: "Pricing", color: "#7c3aed", desc: "Approve the Unit Cost and set prices on quick sale and single items.", sections: ["pricing"],
     icon: '<path d="M3 12l9-9h7v7l-9 9z"/><circle cx="15.5" cy="8.5" r="1.6"/>'},
@@ -7984,7 +8057,7 @@ const PORTAL_BY = Object.fromEntries(PORTALS.map(p => [p.id, p]));
 const portalOf = s => (portal && PORTAL_BY[portal] && PORTAL_BY[portal].sections.includes(s)) ? PORTAL_BY[portal] : PORTALS.find(p => p.sections.includes(s));
 const PORTAL_SHARED = new Set(["updreq", "salesreq", "newlist"]);   /* shared screens don't open a portal on their own */
 const portalOk = p => p.need ? can(p.need) : p.sections.filter(s => p.id !== "pdm" || !PORTAL_SHARED.has(s)).some(sectionAllowed);
-const portalFirst = p => p.id === "pdm" ? (["products", "home", "itemload", "workflow"].find(x => sectionAllowed(x) && (x !== "products" || master)) || p.sections.find(sectionAllowed)) : p.sections.find(sectionAllowed);
+const portalFirst = p => p.id === "pdm" ? (["home", "products", "itemload", "workflow"].find(x => sectionAllowed(x) && (x !== "products" || master)) || p.sections.find(sectionAllowed)) : p.sections.find(sectionAllowed);
 function portalNav() {
   const P = PORTAL_BY[portal];
   document.querySelectorAll("#nav .nv[data-s]").forEach(n => n.style.display = P && P.sections.includes(n.dataset.s) && sectionAllowed(n.dataset.s) ? "" : "none");
@@ -8147,7 +8220,6 @@ $("#loginBody").addEventListener("change", async e => {
 });
 
 $("#topstrip .brand").addEventListener("click", () => showLauncher());
-wsInit();
 /* ======================================================================
    ITEM GROUPS
    The same product in different sizes / colors (socket sets, clothing,
@@ -9046,6 +9118,931 @@ $("#cfgSelBtn").addEventListener("click", () => openCfgPicker([...selected], `${
 $("#drawerBody").addEventListener("click", e => { if (e.target.closest("[data-cfgitem]") && selItem) openCfgPicker([selItem.idx], selItem.item[PN] || selItem.id); });
 $("#groupsBody").addEventListener("click", e => { const b = e.target.closest("#fmCfg"); if (!b) return; const f = fm.sel && famById(fm.sel); if (f) openCfgPicker(f.ids.map(id => idMap.get(id)).filter(i => i !== undefined), `item group ${f.name}`); });
 
+
+
+/* ======================================================================
+   CHANNEL READINESS
+   An item is ready for a channel when every field the channel needs is
+   filled in and valid. Items count for a channel when its channel flag
+   (Channel Outputs) is Yes. Admins edit what each channel needs; it is
+   kept in ws.settings.readiness.
+   Rule lines: "Field" or "Field | Other Field = Value" (needed only when
+   the other field has that value).
+   ====================================================================== */
+const RD_HC = " | Has Case Pack (Y/N) = Yes", RD_HU = " | Has UPC = Yes";
+const RD_DEFAULT = () => ({
+  base: ["Item Number", "Product Title", "Marketing Brand Name", "Category Classification ID", "Supplier ID", "Unit Cost"],
+  channels: {
+    "ERP": ["Long ERP Description", "Short ERP Description", "Purchasing Unit", "Pack Size", "Harmonized Tariff Code (HTS)", "Country of Origin (Primary)", "Case Qty" + RD_HC],
+    "Website": ["Product Web Title", "Product Features and Benefits (Web)", "Supplier Descriptive Paragraph", "Primary Product Image DAM Link", "Retail Price", "UPC (GTIN)" + RD_HU, "Weight (Shipping)", "Web Search Keywords"],
+    "Amazon": ["Product Web Title", "Product Features and Benefits (Web)", "Primary Product Image DAM Link", "UPC (GTIN)", "ASIN", "Retail Price", "Weight (Product)", "Length (Product)", "Width (Product)", "Height (Product)", "Country of Origin (Primary)"],
+    "Retail Stores": ["UPC (GTIN)", "Retail Price", "Case Qty" + RD_HC, "Case GTIN" + RD_HC, "Weight (Product)", "Country of Origin (Primary)"],
+    "Outlet Stores": ["UPC (GTIN)" + RD_HU, "Outlet Price"],
+    "Wholesale": ["Wholesale Pricing", "Minimum Order Qty", "Case Qty" + RD_HC, "Case GTIN" + RD_HC],
+    "Distributor": ["Distributor Item Number", "Distributor Pricing", "Harmonized Tariff Code (HTS)", "Weight (Shipping)", "Length (Shipping)", "Width (Shipping)", "Height (Shipping)"],
+    "Catalog": ["Product Web Title", "Product Features and Benefits (Web)", "Primary Product Image DAM Link", "Retail Price"],
+    "Social Shop": ["Product Web Title", "Supplier Descriptive Paragraph", "Primary Product Image DAM Link", "Retail Price"],
+    "Club Stores": ["UPC (GTIN)", "Member Price", "Case Qty" + RD_HC],
+    "Corporate Gifts": ["Product Web Title", "Primary Product Image DAM Link", "Wholesale Pricing"],
+    "Pro Accounts": ["Wholesale Pricing", "UPC (GTIN)" + RD_HU],
+    "Partner Stores": ["UPC (GTIN)" + RD_HU, "Retail Price", "Primary Product Image DAM Link"],
+    "Partner Stores CA": ["UPC (GTIN)" + RD_HU, "Retail Price", "Country of Origin (Primary)", "Category - French", "Warranty Policy - French"],
+    "Canada": ["Canada Harmonized Tariff Code (HTS)", "Country of Origin (Primary)", "Category - French", "Warranty Policy - French"],
+    "Canada-Only": ["Country of Origin (Primary)", "Category - French", "Warranty Policy - French", "Harmonized Tariff Code (HTS)"],
+    "Pop-up Shops": ["UPC (GTIN)" + RD_HU, "Retail Price", "Promo Price"],
+  }});
+const rdCfg = () => (ws.settings && ws.settings.readiness) || RD_DEFAULT();
+const rdBlank = v => { const s = String(v ?? "").trim(); return !s || /^(n\/?a|none|tbd|-+)$/i.test(s); };
+/* the column a name points at, or null when it isn't in the data */
+function rdCol(a) {
+  const c = resolveCol(a) || a;
+  if (master && master.head.includes(c)) return c;
+  if ((extra && extra[c]) || VCOLS[c]) return c;
+  return null;
+}
+function rdGetter(c) {
+  const k = master.head.indexOf(c);
+  if (k >= 0) return i => master.rows[i][k] || "";
+  return i => getVal(c, i);
+}
+function rdParse(line) {
+  const [f, cond] = String(line).split("|").map(s => s.trim());
+  const r = {line: String(line).trim(), a: f};
+  if (cond) { const m = cond.match(/^(?:when\s+)?(.+?)\s*=\s*(.*)$/i); if (m) r.cond = {a: m[1].trim(), v: m[2].trim()}; }
+  return r;
+}
+/* format / list check for one field: (value, row) -> "" or why it's wrong */
+function rdChecker(c) {
+  if (brand && isBrandAttr(c)) { const sidC = rdCol("Supplier ID"), sid = sidC ? rdGetter(sidC) : () => "";
+    return (v, i) => { const k = classifyBrand(sid(i), v); return ["ok", "nosup", "nosid"].includes(k.cls) ? "" : BRAND_CLS[k.cls][0]; }; }
+  const L = lovFor(c), t = TPL.find(x => x.attr === c || x.name === c), [rule, arg] = t ? t.rule.split(":") : [""];
+  return v => {
+    if (L && !lovHas(L, v)) return "Not in the list of values";
+    if (rule === "max" && v.length > +arg) return `Over ${arg} characters`;
+    if (rule === "num" && !num(v)) return "Not a number";
+    if (rule === "date" && !/^\d{4}-\d{2}-\d{2}$/.test(v)) return "Not YYYY-MM-DD";
+    if (rule === "hts" && !/^\d{4}\.\d{2}\.\d{4}$/.test(v)) return "Should be XXXX.XX.XXXX";
+    if (rule === "gtin" && !/^\d{8,14}$/.test(v.replace(/\s/g, ""))) return "Should be 8 to 14 digits";
+    return "";
+  };
+}
+/* channels with their compiled rules (fields that aren't in the data are skipped and listed) */
+function rdCompile() {
+  const cfg = rdCfg(), memo = new Map(), skipped = new Set();
+  const field = a => { const c = rdCol(a); if (!c) { skipped.add(a); return null; }
+    if (!memo.has(c)) { const get = rdGetter(c), chk = rdChecker(c), st = new Array(master.rows.length);
+      memo.set(c, {name: c, get, state: i => { let s = st[i]; if (s === undefined) { const v = String(get(i)).trim(); s = st[i] = rdBlank(v) ? "Missing" : chk(v, i); } return s; }}); }
+    return memo.get(c); };
+  const rules = lines => lines.map(rdParse).map(r => { const f = field(r.a); if (!f) return null;
+    let cond = null; if (r.cond) { const cc = rdCol(r.cond.a); if (!cc) { skipped.add(r.cond.a); return null; } const g = rdGetter(cc), want = norm(r.cond.v); cond = i => norm(g(i)) === want; }
+    return {f, cond, line: r.line}; }).filter(Boolean);
+  const base = rules(cfg.base || []);
+  const chans = Object.entries(cfg.channels || {}).map(([name, lines]) => {
+    const fc = rdCol(name); if (!fc) { skipped.add(name); return null; }
+    const own = rules(lines || []), seen = new Set(own.map(r => r.f.name));
+    return {name, flag: rdGetter(fc), rules: [...base.filter(r => !seen.has(r.f.name)), ...own]};
+  }).filter(Boolean);
+  return {chans, skipped: [...skipped]};
+}
+/* one item on one channel: [{a, why}] of what's missing / wrong, and how many fields apply */
+function rdEval(ch, i) {
+  const fails = []; let tot = 0;
+  ch.rules.forEach(r => { if (r.cond && !r.cond(i)) return; tot++; const s = r.f.state(i); if (s) fails.push({a: r.f.name, why: s}); });
+  return {fails, tot};
+}
+let rdCache = null;
+function rdCompute() {
+  if (!master) return null;
+  const key = JSON.stringify(rdCfg());
+  if (rdCache && rdCache.m === master && rdCache.key === key && rdCache.lov === lov && rdCache.brand === brand) return rdCache;
+  const t0 = performance.now(), C = rdCompile(), N = master.rows.length;
+  const notReady = new Uint8Array(N), onAny = new Uint8Array(N), blockF = new Map();   /* field -> items it blocks (any channel) */
+  const chans = C.chans.map(ch => {
+    const on = [], fail = new Map(), byField = new Map();
+    for (let i = 0; i < N; i++) {
+      if (!isYes(ch.flag(i))) continue;
+      on.push(i); onAny[i] = 1;
+      const {fails} = rdEval(ch, i);
+      if (fails.length) { fail.set(i, fails); notReady[i]++;
+        fails.forEach(f => { byField.set(f.a, (byField.get(f.a) || 0) + 1); let s = blockF.get(f.a); if (!s) blockF.set(f.a, s = new Uint8Array(N)); s[i] = 1; }); }
+    }
+    return {name: ch.name, ch, on, fail, ready: on.length - fail.size, byField: [...byField.entries()].sort((a, b) => b[1] - a[1])};
+  });
+  let nOn = 0, nReady = 0; for (let i = 0; i < N; i++) if (onAny[i]) { nOn++; if (!notReady[i]) nReady++; }
+  const blockers = [...blockF.entries()].map(([a, s]) => [a, s.reduce((t, x) => t + x, 0)]).sort((a, b) => b[1] - a[1]);
+  rdCache = {m: master, key, lov, brand, C, chans, notReady, onAny, nOn, nReady, blockers, ms: Math.round(performance.now() - t0)};
+  rdSnapshot(rdCache);
+  return rdCache;
+}
+/* one point a day for the trend on Home (kept in this browser's workspace) */
+function rdSnapshot(R) {
+  if (!R.nOn) return;
+  const d = nlIso(Date.now()), H = ws.settings.qHist || (ws.settings.qHist = []), p = Math.round(1000 * R.nReady / R.nOn) / 10;
+  const last = H[H.length - 1];
+  if (last && last.d === d) { if (last.p === p && last.n === R.nOn) return; last.p = p; last.n = R.nOn; } else H.push({d, p, n: R.nOn});
+  if (H.length > 180) H.splice(0, H.length - 180);
+  wsSave();
+}
+const rdLineTxt = l => { const r = rdParse(l); return r.cond ? `${r.a} (when ${r.cond.a} = ${r.cond.v})` : r.a; };
+const rdPct = (a, b) => b ? Math.round(1000 * a / b) / 10 : 0;
+const rdFmtPct = p => (p >= 99.95 || p === 0 ? p.toFixed(0) : p.toFixed(1)) + "%";
+const rdLvl = p => p >= 95 ? "ok" : p >= 75 ? "mid" : "low";
+/* readiness of one item on every channel it's on */
+function rdItem(i) {
+  const R = rdCompute(); if (!R) return [];
+  return R.chans.filter(c => isYes(c.ch.flag(i))).map(c => { const e = rdEval(c.ch, i); return {name: c.name, ...e, pct: e.tot ? rdPct(e.tot - e.fails.length, e.tot) : 100}; });
+}
+
+/* ---------- Readiness page ---------- */
+let rd = {ch: null, field: "", mgr: null, cat: "", page: 0, edit: false};
+const rdCanEdit = () => can("data") || can("users");
+const rdMgrOf = (() => { let g = null, m = null; return i => { if (m !== master) { m = master; const c = rdCol("Category Manager"); g = c ? rdGetter(c) : () => ""; } return g(i); }; })();
+const rdCatOf = i => { const n = (itemTax() || [])[i]; return n && n.cat ? n.cat.name : ""; };
+function rdScope(i) { return (!rd.mgr || norm(rdMgrOf(i)) === norm(rd.mgr)) && (!rd.cat || rdCatOf(i) === rd.cat); }
+function renderReady() {
+  const B = $("#readyBody"); if (!B) return;
+  if (!master) { B.innerHTML = '<h1>Channel readiness</h1><p class="muted">Load the product data first (Admin &rsaquo; Data import).</p>'; return; }
+  if (rd.edit) return renderReadyEdit();
+  if (rd.mgr === null) rd.mgr = roleOf(me()).scope === "mine" && me().link ? myMgr() : "";
+  const R = rdCompute(), scoped = rd.mgr || rd.cat;
+  const rows = R.chans.map(c => {
+    const on = scoped ? c.on.filter(rdScope) : c.on, nf = scoped ? on.filter(i => c.fail.has(i)).length : c.fail.size;
+    const bf = new Map(); if (scoped) on.forEach(i => (c.fail.get(i) || []).forEach(f => bf.set(f.a, (bf.get(f.a) || 0) + 1)));
+    const top = scoped ? [...bf.entries()].sort((a, b) => b[1] - a[1]) : c.byField;
+    return {c, on: on.length, ready: on.length - nf, blocked: nf, pct: rdPct(on.length - nf, on.length), top};
+  });
+  const mgrs = [...new Set(master.rows.map((r, i) => rdMgrOf(i)).filter(Boolean))].sort();
+  const cats = taxTree ? taxTree.cats.map(c => c.name) : [];
+  let h = `<div class="rdHead"><div><h1>Channel readiness</h1><div class="muted">An item is ready for a channel when every field that channel needs is filled in and valid. Items count for a channel when its flag in Channel Outputs is Yes.</div></div>
+    ${rdCanEdit() ? '<button class="outline" id="rdEditBtn">Edit what each channel needs</button>' : ""}</div>
+    <div class="rdFilters"><label>Category manager <select class="in" id="rdMgr"><option value="">All</option>${mgrs.map(m => `<option ${m === rd.mgr ? "selected" : ""}>${esc(m)}</option>`).join("")}</select></label>
+      <label>Category <select class="in" id="rdCat"><option value="">All</option>${cats.map(m => `<option ${m === rd.cat ? "selected" : ""}>${esc(m)}</option>`).join("")}</select></label>
+      ${R.C.skipped.length ? `<span class="muted" title="${esc(R.C.skipped.join(", "))}">${R.C.skipped.length} field${R.C.skipped.length === 1 ? "" : "s"} in the requirements aren't in the data and are skipped</span>` : ""}</div>
+    <div class="tbl2"><table class="rdTbl"><tr><th>Channel</th><th class="num">Items on it</th><th class="num">Ready</th><th class="num">Not ready</th><th style="width:30%">% ready</th><th>Biggest blocker</th></tr>
+    ${rows.map(x => `<tr class="click ${rd.ch === x.c.name ? "on" : ""}" data-rdch="${esc(x.c.name)}"><td><b>${esc(x.c.name)}</b></td><td class="num">${x.on.toLocaleString()}</td><td class="num">${x.ready.toLocaleString()}</td><td class="num">${x.blocked ? x.blocked.toLocaleString() : '<span class="muted">0</span>'}</td>
+      <td>${x.on ? rdBarHtml(x.pct) : '<span class="muted">No items on this channel</span>'}</td><td>${x.top[0] ? `${esc(x.top[0][0])} <span class="muted">&middot; ${x.top[0][1].toLocaleString()} item${x.top[0][1] === 1 ? "" : "s"}</span>` : '<span class="muted">&ndash;</span>'}</td></tr>`).join("")}</table></div>
+    <div id="rdDetail"></div>`;
+  B.innerHTML = h;
+  $("#rdMgr").onchange = e => { rd.mgr = e.target.value; rd.page = 0; renderReady(); };
+  $("#rdCat").onchange = e => { rd.cat = e.target.value; rd.page = 0; renderReady(); };
+  if ($("#rdEditBtn")) $("#rdEditBtn").onclick = () => { rd.edit = true; renderReady(); };
+  B.querySelectorAll("[data-rdch]").forEach(tr => tr.onclick = () => { rd.ch = rd.ch === tr.dataset.rdch ? null : tr.dataset.rdch; rd.field = ""; rd.page = 0; renderReady(); });
+  if (rd.ch) renderReadyDetail(R, rows.find(x => x.c.name === rd.ch));
+}
+const rdBarHtml = p => `<span class="rdBar ${rdLvl(p)}" title="${rdFmtPct(p)} ready"><i style="width:${Math.max(p, p ? 1.5 : 0)}%"></i></span> <b class="rdPctTxt">${rdFmtPct(p)}</b>`;
+function renderReadyDetail(R, x) {
+  const D = $("#rdDetail"); if (!x) { D.innerHTML = ""; return; }
+  const c = x.c, list = [...c.fail.keys()].filter(i => rdScope(i) && (!rd.field || c.fail.get(i).some(f => f.a === rd.field)));
+  const PG = 100, pages = Math.max(1, Math.ceil(list.length / PG)); rd.page = Math.min(rd.page, pages - 1);
+  const shown = list.slice(rd.page * PG, rd.page * PG + PG), maxB = x.top.length ? x.top[0][1] : 1;
+  const ttl = i => getVal("Product Web Title", i) || getVal("Product Title", i);
+  D.innerHTML = `<div class="rdDet">
+    <h2>${esc(c.name)}: ${x.blocked.toLocaleString()} item${x.blocked === 1 ? "" : "s"} not ready</h2>
+    <div class="muted" style="margin-bottom:10px">Needs: ${c.ch.rules.map(r => esc(rdLineTxt(r.line))).join(" &middot; ")}</div>
+    ${x.top.length ? `<h3>What's blocking them</h3><div class="rdBlk">${x.top.slice(0, 12).map(([a, n]) => `<button class="rdBlkRow ${rd.field === a ? "on" : ""}" data-rdf="${esc(a)}" title="Show only items blocked by ${esc(a)}"><span class="rdBlkName">${esc(a)}</span><span class="rdBlkBar"><i style="width:${Math.max(2, 100 * n / maxB)}%"></i></span><span class="rdBlkN">${n.toLocaleString()}</span></button>`).join("")}</div>` : ""}
+    ${list.length ? `<div class="rdTools"><b>${list.length.toLocaleString()}</b>&nbsp;item${list.length === 1 ? "" : "s"}${rd.field ? ` missing or wrong on <b>${esc(rd.field)}</b> <button class="lk" id="rdAllF">show all</button>` : ""}
+      <span style="flex:1"></span>
+      ${can("edit") ? `<button class="primary sm" id="rdFix" title="Open these items in the Review grid with just this channel's fields">Fix in Review grid${list.length > MAX_REVIEW ? ` (first ${MAX_REVIEW})` : ""}</button>` : ""}
+      <button class="outline sm" id="rdXlsx">&#8681; Excel</button></div>
+    <div class="tbl2"><table><tr><th>Item</th><th>Title</th><th>Category manager</th><th>Missing or wrong</th></tr>
+    ${shown.map(i => `<tr class="click" data-rdi="${i}"><td><b>${esc(getVal(PN, i) || getVal(ID, i))}</b></td><td>${esc(ttl(i)).slice(0, 80)}</td><td>${esc(rdMgrOf(i))}</td>
+      <td>${c.fail.get(i).map(f => `<span class="rdMiss ${f.why === "Missing" ? "" : "bad"}" title="${esc(f.why)}">${esc(f.a)}${f.why === "Missing" ? "" : " &#9888;"}</span>`).join(" ")}</td></tr>`).join("")}</table></div>
+    ${pages > 1 ? `<div class="rdPager"><button class="lk" id="rdPrev" ${rd.page ? "" : "disabled"}>&lsaquo; Previous</button> Page ${rd.page + 1} of ${pages} <button class="lk" id="rdNext" ${rd.page < pages - 1 ? "" : "disabled"}>Next &rsaquo;</button></div>` : ""}`
+    : `<p class="muted">Every item on ${esc(c.name)} is ready${rd.mgr || rd.cat ? " for this filter" : ""}.</p>`}</div>`;
+  D.querySelectorAll("[data-rdf]").forEach(b => b.onclick = () => { rd.field = rd.field === b.dataset.rdf ? "" : b.dataset.rdf; rd.page = 0; renderReadyDetail(R, x); });
+  D.querySelectorAll("[data-rdi]").forEach(tr => tr.onclick = () => openItem(+tr.dataset.rdi));
+  if ($("#rdAllF")) $("#rdAllF").onclick = () => { rd.field = ""; renderReadyDetail(R, x); };
+  if ($("#rdPrev")) $("#rdPrev").onclick = () => { rd.page--; renderReadyDetail(R, x); };
+  if ($("#rdNext")) $("#rdNext").onclick = () => { rd.page++; renderReadyDetail(R, x); };
+  if ($("#rdFix")) $("#rdFix").onclick = () => rvOpenWith(list.slice(0, MAX_REVIEW), c.ch.rules.map(r => r.f.name));
+  $("#rdXlsx").onclick = () => {
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["Item Number", "Product Title", "Category Manager", "Category", "Channel", "Missing", "Wrong"],
+      ...list.map(i => { const f = c.fail.get(i); return [getVal(PN, i), ttl(i), rdMgrOf(i), rdCatOf(i), c.name, f.filter(x => x.why === "Missing").map(x => x.a).join("; "), f.filter(x => x.why !== "Missing").map(x => `${x.a} (${x.why})`).join("; ")]; })]), "Not ready");
+    XLSX.writeFile(wb, `${c.name.replace(/[^\w-]+/g, "_")}_not_ready_${nlIso(Date.now())}.xlsx`);
+    audit("Readiness downloaded", c.name, `${list.length} items`);
+  };
+}
+function renderReadyEdit() {
+  const B = $("#readyBody"), cfg = rdCfg(), flags = OFFLINE_ATTRS().filter(a => a !== "PIM");
+  const names = [...new Set([...Object.keys(cfg.channels || {}), ...flags])];
+  const known = a => !!rdCol(rdParse(a).a);
+  const box = (key, label, lines, note) => { const bad = (lines || []).filter(l => !known(l));
+    return `<div class="rdEd"><div class="rdEdH"><b>${esc(label)}</b>${note ? ` <span class="muted">${note}</span>` : ""}</div>
+      <textarea class="in" data-rdk="${esc(key)}" rows="${Math.max(3, (lines || []).length + 1)}" spellcheck="false">${esc((lines || []).join("\n"))}</textarea>
+      ${bad.length ? `<div class="rdEdBad">&#9888; Not in the data, skipped: ${bad.map(esc).join(", ")}</div>` : ""}</div>`; };
+  B.innerHTML = `<div class="rdHead"><div><h1>What each channel needs</h1><div class="muted">One field per line. Add <code>| Other Field = Value</code> to need a field only sometimes, e.g. <code>Case Qty | Has Case Pack (Y/N) = Yes</code>. An empty box means the channel isn't scored.</div></div></div>
+    <datalist id="rdFields">${columns.map(c => `<option value="${esc(c)}">`).join("")}</datalist>
+    ${box("__base", "Every channel", cfg.base, "needed on all channels")}
+    <div class="rdEdGrid">${names.map(n => box(n, n, (cfg.channels || {})[n], rdCol(n) ? "" : "(no channel flag with this name in the data)")).join("")}</div>
+    <div class="rdEdBar"><button class="primary" id="rdSave">Save</button> <button class="outline" id="rdCancel">Cancel</button> <span style="flex:1"></span><button class="lk" id="rdReset">Put back the defaults</button></div>`;
+  const read = () => { const out = {base: [], channels: {}};
+    B.querySelectorAll("[data-rdk]").forEach(t => { const L = t.value.split(/\n/).map(s => s.trim()).filter(Boolean); if (t.dataset.rdk === "__base") out.base = L; else if (L.length) out.channels[t.dataset.rdk] = L; });
+    return out; };
+  $("#rdSave").onclick = () => { ws.settings.readiness = read(); audit("Readiness requirements changed", "Channels", Object.keys(ws.settings.readiness.channels).join(", ")); wsSave(); rd.edit = false; rdCache = null; renderReady(); setStatus("Channel requirements saved."); };
+  $("#rdCancel").onclick = () => { rd.edit = false; renderReady(); };
+  $("#rdReset").onclick = () => { if (!confirm("Put back the built-in requirements for every channel?")) return; delete ws.settings.readiness; audit("Readiness requirements reset", "Channels"); wsSave(); rdCache = null; renderReadyEdit(); };
+}
+
+/* open the Review grid on these items, showing only these fields */
+async function rvOpenWith(idxs, colNames) {
+  if (!idxs.length) return;
+  if (idxs.length > MAX_REVIEW) idxs = idxs.slice(0, MAX_REVIEW);
+  closeDrawer();
+  $("#review").classList.add("open");
+  $("#rvWrap").innerHTML = '<p class="pad muted" id="rvLoad">Loading items...</p>';
+  rv.items = await loadItems(idxs, (a, b) => { const el = $("#rvLoad"); if (el) el.textContent = `Loading items... ${a} / ${b}`; });
+  rv.filters = {}; rv.mode = "grid"; rv.fields = "all"; rv.onlyEdited = false; rv.upload = null; rtNote(); rvLoadDraft();
+  document.querySelectorAll("#rvMode button").forEach(b => b.classList.toggle("on", b.dataset.m === "grid"));
+  buildReview();
+  if (colNames) {
+    const want = [...new Set(colNames.map(a => resolveCol(a) || a))].filter(a => a !== PN && a !== ID), keep = want.map(a => rv.cols.find(c => c.name === a) || (a !== PN && a !== ID && columns.includes(a) ? {group: attrGroupOf(a) || "Other", name: a} : null)).filter(Boolean);
+    if (keep.length) { rv.cols = keep; renderReviewTable(); }
+  }
+}
+
+/* ======================================================================
+   ITEM PANEL: readiness strip + Readiness and History tabs
+   ====================================================================== */
+function rdStripHtml(i) {
+  const L = rdItem(i); if (!L.length) return "";
+  return `<div class="rdStrip">${L.map(x => { const ok = !x.fails.length;
+    return `<button class="rdChip ${ok ? "ok" : rdLvl(x.pct)}" data-sttabgo="Readiness" title="${esc(ok ? `Ready for ${x.name}` : `${x.name}: ${x.fails.map(f => f.a + (f.why === "Missing" ? " (missing)" : ` (${f.why})`)).join(", ")}`)}">${ok ? "&#10003;" : `${x.tot - x.fails.length}/${x.tot}`} ${esc(x.name)}</button>`; }).join("")}</div>`;
+}
+function rdItemTabHtml(i) {
+  const L = rdItem(i);
+  if (!L.length) return '<p class="muted">This item isn\'t flagged Yes for any scored channel.</p>';
+  const nr = L.filter(x => x.fails.length);
+  return `<div class="rdItem"><p class="muted">${nr.length ? `Not ready for ${nr.length} of ${L.length} channel${L.length === 1 ? "" : "s"}.` : `Ready for all ${L.length} channels it's on.`} Fields marked &#9888; are filled in but fail a check.</p>
+    <div class="tbl2"><table><tr><th>Channel</th><th style="width:30%">Fields complete</th><th>Missing or wrong</th></tr>
+    ${L.sort((a, b) => a.pct - b.pct).map(x => `<tr><td><b>${esc(x.name)}</b></td><td>${rdBarHtml(x.pct)} <span class="muted">${x.tot - x.fails.length} of ${x.tot}</span></td>
+      <td>${x.fails.length ? x.fails.map(f => `<span class="rdMiss ${f.why === "Missing" ? "" : "bad"}" title="${esc(f.why)}">${esc(f.a)}${f.why === "Missing" ? "" : " &#9888; " + esc(f.why)}</span>`).join(" ") : '<span class="rdOk">&#10003; Ready</span>'}</td></tr>`).join("")}</table></div></div>`;
+}
+/* everything that happened to an item: requests (all statuses) + dates from PIM */
+function histFor(it) {
+  const id = it.id, pn = String(it.item[PN] || "").trim(), out = [];
+  ws.requests.forEach(r => {
+    if (r.status === "draft" && !isOwner(r)) return;
+    const ch = r.changes.map((c, k) => ({c, k})).filter(x => x.c.id === id);
+    const rowHit = !ch.length && rowType(r) && pn && (r.rows || []).some(x => x.v && Object.entries(x.v).some(([k, v]) => /item number$/i.test(k) && String(v || "").trim() === pn));
+    if (ch.length || rowHit) out.push({r, ch, rowHit});
+  });
+  return out.sort((a, b) => String(b.r.updated).localeCompare(String(a.r.updated)));
+}
+const HIST_STEP = {draft: "Created", submitted: "Submitted", approved: "Approved", exported: "Exported", returned: "Returned", rejected: "Rejected", withdrawn: "Withdrawn", pricing: "Sent to Pricing"};
+function histTabHtml(it) {
+  const H = histFor(it), I = it.item, canUndo = can("edit");
+  const pimDates = [["Added to PIM", "PIM Intro Date"], ["Marketing date", NL_DEFAULT_DATE], ["Last updated in PIM", "Last Updated"], ["Last sent to ERP", "ERP Update Date"], ["Last syndicated", "Last Syndicated"]]
+    .map(([l, a]) => [l, I[resolveCol(a) || a]]).filter(x => x[1] && String(x[1]).trim());
+  const short = v => { const s = unhtml(String(v ?? "")); return s ? esc(s.length > 140 ? s.slice(0, 140) + "..." : s) : '<span class="muted">(empty)</span>'; };
+  let h = `<div class="hist"><p class="muted">Every request that touched this item in this workspace, newest first${pimDates.length ? ", then the dates PIM has on record" : ""}.${canUndo ? " <b>Undo</b> puts the earlier value back through your draft, so it still goes through approval." : ""}</p>`;
+  if (!H.length) h += '<div class="histEmpty">No changes requested on this item yet.</div>';
+  H.forEach(({r, ch, rowHit}) => {
+    const done = ["approved", "exported"].includes(r.status);
+    const steps = (r.history || []).filter((x, k, a) => k === 0 || x.s !== a[k - 1].s).map(x => `${HIST_STEP[x.s] || esc(x.s)} ${x.u ? "by " + esc(x.u) + " " : ""}<span class="muted">${esc(fmtT(x.t))}</span>`).join(" &rsaquo; ");
+    h += `<div class="histCard"><div class="histTop"><span class="stpill" style="background:color-mix(in srgb, ${STATUS[r.status][1]} 14%, transparent);color:${STATUS[r.status][1]}">${STATUS[r.status][0]}</span>
+      <a class="lk" style="padding:0" data-openreq="${r.id}">#${r.id}</a> <b>${esc(r.title)}</b>${ch.some(x => x.c.undoOf) ? ' <span class="muted">(undo)</span>' : ""}</div>
+      <div class="histSteps">${steps}</div>
+      ${rowHit ? `<div class="muted" style="margin-top:6px">Item set up through this request${r.source ? " (" + esc(r.source) + ")" : ""}.</div>` : ""}
+      ${ch.length ? `<table class="histTbl"><tr><th>Field</th><th>Before</th><th>After</th>${canUndo && done ? "<th></th>" : ""}</tr>${ch.map(({c, k}) => `<tr><td>${esc(c.attr)}${c.linked ? `<div class="muted" style="font-size:11px">follows ${esc(c.linked)}</div>` : ""}</td><td class="histOld">${short(c.old)}</td><td class="histNew">${short(c.nv)}</td>
+        ${canUndo && done ? `<td>${c.linked ? "" : `<button class="lk" data-hundo="${r.id}:${k}" title="Draft a change back to the earlier value">Undo</button>`}</td>` : ""}</tr>`).join("")}</table>` : ""}</div>`;
+  });
+  if (pimDates.length) h += `<div class="histPim"><b>From PIM</b>${pimDates.map(([l, v]) => `<div><span class="muted">${esc(l)}</span> ${esc(v)}</div>`).join("")}</div>`;
+  return h + "</div>";
+}
+/* undo: draft the earlier value back (plus the translations / calculations that followed it in the same request) */
+function histUndo(rid, k) {
+  const r = reqById(rid), c = r && r.changes[k]; if (!c || !selItem) return;
+  const d = myDraft(true), it = selItem.item, back = [c, ...r.changes.filter(x => x.id === c.id && x.linked === c.attr)];
+  back.forEach(x => { d.changes = d.changes.filter(y => !(y.id === x.id && y.attr === x.attr));
+    d.changes.push({id: x.id, pn: it[PN] || x.pn || "", attr: x.attr, old: x.nv, nv: x.old || "", sid: it["Supplier ID"] || x.sid || "", mgr: x.mgr || mgrOfSid(it["Supplier ID"]), group: x.group, undoOf: r.id, ...(x.linked ? {linked: x.linked} : {})}); });
+  d.updated = nowISO(); audit("Undo drafted", `${it[PN] || selItem.id} · ${c.attr}`, `#${r.id}: ${c.nv} → ${c.old}`); wsSave();
+  setStatus(`Undo of ${c.attr} (from #${r.id}) added to your draft #${d.id}. Submit it on the Workflow tab.`);
+  renderItemView();
+}
+$("#drawerBody").addEventListener("click", e => {
+  const u = e.target.closest("[data-hundo]"); if (u) { const [rid, k] = u.dataset.hundo.split(":").map(Number); histUndo(rid, k); return; }
+  const g = e.target.closest("[data-sttabgo]"); if (g) { stepActive.item = g.dataset.sttabgo; renderItemView(); }
+});
+const ITEM_EXTRA_TABS = () => !selItem ? [] : [
+  {name: "Readiness", render: () => rdItemTabHtml(selItem.idx), badge: rdItem(selItem.idx).filter(x => x.fails.length).length},
+  {name: "History", render: () => histTabHtml(selItem), badge: 0},
+];
+
+/* ======================================================================
+   EDIT IN A SPREADSHEET, BRING IT BACK
+   Download from the Review grid (Excel), edit, then upload here: Harim
+   matches the rows to items, compares every cell with the current value
+   and puts what changed into the Review grid, ready for your draft.
+   ====================================================================== */
+function ensureLookup() {
+  if (lookupAll) return lookupAll;
+  lookupAll = new Map();
+  [ID, "Item Number", "ERP Item Number", "Supplier Part Number"].forEach(c => {
+    const k = master.head.indexOf(c); if (k < 0) return;
+    master.rows.forEach((r, i) => { const v = (r[k] || "").trim().toLowerCase(); if (v && !lookupAll.has(v)) lookupAll.set(v, i); });
+  });
+  return lookupAll;
+}
+const rtPad = n => String(n).padStart(2, "0");
+/* what the person meant, given what Excel may have done to the value */
+function rtNorm(v, old) {
+  v = String(v ?? "").replace(/\r/g, "").trim(); const o = String(old ?? "").trim();
+  if (v === o) return o;
+  if (num(v) && num(o) && Number(v.replace(/,/g, "")) === Number(o.replace(/,/g, ""))) return o;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(o) && /^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(v)) { const [m, d, y] = v.split("/").map(Number); return `${y < 100 ? 2000 + y : y}-${rtPad(m)}-${rtPad(d)}`; }
+  if (/^\d+(\.\d+)?e\+\d+$/i.test(v) && /^\d+$/.test(o) && Math.abs(Number(v) - Number(o)) <= Number(o) * 1e-6) return o;
+  if (unhtml(o) === v) return o;   /* HTML values come back as their text */
+  return v;
+}
+async function rtUpload(file) {
+  if (!master) { alert("Load the product data first."); return; }
+  if (!can("edit")) { alert(`${roleOf(me()).name} can't propose changes to items.`); return; }
+  if (typeof XLSX === "undefined") { alert("The Excel library didn't load (it needs the internet)."); return; }
+  setStatus(`Reading ${file.name}...`);
+  const wb = XLSX.read(await file.arrayBuffer(), {type: "array"});
+  const sn = wb.SheetNames.find(n => /^review$/i.test(n)) || wb.SheetNames.find(n => !/^(edits|how to|issues|approval|change log)$/i.test(n)) || wb.SheetNames[0];
+  const all = XLSX.utils.sheet_to_json(wb.Sheets[sn], {header: 1, defval: "", raw: false});
+  const hi = all.findIndex(r => r.some(v => String(v).trim())); if (hi < 0) { alert("That sheet is empty."); return; }
+  const head = all[hi].map(h => String(h).trim()), body = all.slice(hi + 1).filter(r => r.some(v => String(v).trim()));
+  const keyPref = [ID, "id", "Product ID", "Item Number", "ERP Item Number", "Supplier Part Number"].map(normH), keyish = new Set([ID, "id", "Product ID"].map(normH));
+  let kc = -1; for (const k of keyPref) { kc = head.findIndex(h => normH(h) === k); if (kc >= 0) break; } if (kc < 0) kc = 0;
+  const byNorm = new Map(columns.map(c => [normH(c), c]));
+  const cols = head.map((h, j) => { if (j === kc || !h || keyish.has(normH(h)) || (normH(h) === normH(PN) && normH(head[kc]) !== normH(PN))) return null; return resolveCol(h) || byNorm.get(normH(h)) || {unknown: h}; });
+  const unknown = cols.filter(c => c && c.unknown).map(c => c.unknown), attrs = cols.filter(c => typeof c === "string");
+  const L = ensureLookup(), hits = new Map(), notFound = [];
+  body.forEach(r => { const k = String(r[kc] || "").trim(); if (!k) return; const i = L.get(k.toLowerCase()); if (i === undefined) notFound.push(k); else hits.set(i, r); });
+  if (!hits.size) { alert(`None of the ${body.length} rows matched an item. The "${head[kc] || "first"}" column should hold Item Numbers or IDs.`); setStatus(""); return; }
+  let idxs = [...hits.keys()]; const over = idxs.length > MAX_REVIEW ? idxs.length - MAX_REVIEW : 0;
+  await rvOpenWith(idxs, attrs);
+  const batch = [], locked = new Map(); let changed = 0, same = 0;
+  rv.items.forEach(it => { const r = hits.get(it.idx); if (!r) return;
+    cols.forEach((a, j) => { if (typeof a !== "string") return;
+      const o = origVal(it, a), v = rtNorm(r[j], o);
+      if (v === o) { same++; return; }
+      const c = rv.cols.find(x => x.name === a) || {name: a, group: attrGroupOf(a) || "Other"};
+      if (setCell(it, c, v, batch)) changed++; else { const why = lockReason(it, c); locked.set(a, why); }
+    }); });
+  rv.upload = {file: file.name, changed, items: new Set(batch.map(b => b.k.split("\u0000")[0])).size, locked: [...locked.entries()], unknown, notFound, over, rows: body.length};
+  rv.onlyEdited = changed > 0;
+  commitBatch(batch, ""); rv.upload.auto = [...rv.edits.values()].filter(e => e.linked).length; rtNote();
+  audit("Spreadsheet uploaded", file.name, `${changed} changes on ${rv.upload.items} items`);
+  setStatus(changed ? `${changed} change${changed === 1 ? "" : "s"} from ${file.name} are in the Review grid. Check them, then Save to my draft.` : `No changes found in ${file.name}.`);
+}
+function rtNote() {
+  let n = $("#rvUpNote"); if (!n) { n = document.createElement("div"); n.id = "rvUpNote"; $("#rvWrap").before(n); }
+  const U = rv.upload; if (!U) { n.innerHTML = ""; n.style.display = "none"; return; }
+  n.style.display = "";
+  const bits = [];
+  if (U.locked.length) bits.push(`${U.locked.length} column${U.locked.length === 1 ? "" : "s"} can't be changed here and ${U.locked.length === 1 ? "was" : "were"} skipped: ${U.locked.map(([a, w]) => `<span title="${esc(w)}">${esc(a)}</span>`).join(", ")}`);
+  if (U.unknown.length) bits.push(`${U.unknown.length} column${U.unknown.length === 1 ? "" : "s"} not in the data: ${U.unknown.slice(0, 8).map(esc).join(", ")}${U.unknown.length > 8 ? "..." : ""}`);
+  if (U.notFound.length) bits.push(`${U.notFound.length} row${U.notFound.length === 1 ? "" : "s"} didn't match an item: ${U.notFound.slice(0, 8).map(esc).join(", ")}${U.notFound.length > 8 ? "..." : ""}`);
+  if (U.over) bits.push(`only the first ${MAX_REVIEW} items were opened (${U.over} more in the file)`);
+  n.innerHTML = `<div class="rtNote"><div><b>${esc(U.file)}</b>: ${U.changed ? `<b>${U.changed.toLocaleString()}</b> change${U.changed === 1 ? "" : "s"} on <b>${U.items.toLocaleString()}</b> item${U.items === 1 ? "" : "s"}${U.auto ? `, plus ${U.auto} field${U.auto === 1 ? "" : "s"} that follow${U.auto === 1 ? "s" : ""} automatically (translations, calculated titles)` : ""}` : "no changes found"} <span class="muted">(${U.rows.toLocaleString()} rows read)</span>.
+      Changed cells are highlighted; hover one to see the old value. When it looks right, <b>Save to my draft</b>.
+      ${bits.length ? `<ul>${bits.map(b => `<li>${b}</li>`).join("")}</ul>` : ""}</div>
+    <label class="chk2"><input type="checkbox" id="rvOnlyEd" ${rv.onlyEdited ? "checked" : ""}> Only items with changes</label><button class="ic" id="rvUpX" title="Hide">&#10005;</button></div>`;
+  $("#rvOnlyEd").onchange = e => { rv.onlyEdited = e.target.checked; fillReviewBody(); };
+  $("#rvUpX").onclick = () => { rv.upload = null; rv.onlyEdited = false; rtNote(); fillReviewBody(); };
+}
+const rtInput = document.createElement("input"); rtInput.type = "file"; rtInput.accept = ".xlsx,.xls,.csv"; rtInput.hidden = true; document.body.appendChild(rtInput);
+rtInput.addEventListener("change", e => { const f = e.target.files[0]; e.target.value = ""; if (f) rtUpload(f).catch(err => { setStatus("Upload: " + err.message); alert("Couldn't read that file: " + err.message); }); });
+const rtPick = () => rtInput.click();
+
+/* ======================================================================
+   HOME DASHBOARD
+   ====================================================================== */
+async function renderHome() {
+  const B = $("#homeBody"); if (!B) return;
+  if (!master) { B.innerHTML = '<h1>Home</h1><p class="muted">Open <b>Admin &rsaquo; Data Import</b> and choose your export folder to get started.</p>'; return; }
+  const u = me(), R = rdCompute(), day = 864e5;
+  const approve = ws.requests.filter(r => canApprove(r)), returned = ws.requests.filter(r => isOwner(r) && r.status === "returned");
+  const drafts = ws.requests.filter(r => isOwner(r) && r.status === "draft" && ((r.changes || []).length || (r.rows || []).length));
+  const qsN = can("edit") ? qsOpenCount() : 0, openReqs = ws.requests.filter(r => OPEN.has(r.status) && r.status !== "draft").length;
+  let newWeek = null; try { const D = await nlDates(); if (D.days) { const T = nlDay(new Date()); newWeek = D.days.filter(d => d !== null && d <= T && d > T - 7 * day).length; } } catch (e) {}
+  if (section !== "home") return;
+  const pct = rdPct(R.nReady, R.nOn), waitN = approve.length + returned.length + qsN;
+  const ago = t => { const d = Math.floor((Date.now() - new Date(t)) / day); return d <= 0 ? "today" : d === 1 ? "1 day" : d + " days"; };
+  const reqLine = (r, why) => `<button class="dashReq" data-dreq="${r.id}"><span class="stpill" style="background:color-mix(in srgb, ${STATUS[r.status][1]} 14%, transparent);color:${STATUS[r.status][1]}">${why}</span>
+    <span class="dashReqT"><b>#${r.id}</b> ${esc(r.title)}<span class="muted"> &middot; ${reqItems(r).toLocaleString()} item${reqItems(r) === 1 ? "" : "s"} &middot; ${esc(r.byName || "")}</span></span><span class="muted dashAgo">${ago(r.submitted || r.updated)}</span></button>`;
+  const att = [...approve.map(r => reqLine(r, "Approve")), ...returned.map(r => reqLine(r, "Returned")), ...drafts.map(r => reqLine(r, "Your draft"))];
+  const H = ws.settings.qHist || [];
+  const chRows = R.chans.filter(c => c.on.length).map(c => ({c, pct: rdPct(c.ready, c.on.length)})).sort((a, b) => a.pct - b.pct);
+  B.innerHTML = `<div class="dash">
+    <div class="dashHead"><div><h1>Good ${new Date().getHours() < 12 ? "morning" : new Date().getHours() < 17 ? "afternoon" : "evening"}, ${esc(u.name.split(/\s+/)[0])}</h1><div class="muted">${master.rows.length.toLocaleString()} products &middot; ${roleOf(u).name}</div></div></div>
+    <div class="dashTiles">
+      <button class="dashTile ${waitN ? "hot" : ""}" data-dgo="workflow"><span>Waiting on you</span><b>${waitN.toLocaleString()}</b><em>${approve.length ? `${approve.length} to approve` : "nothing to approve"}${returned.length ? ` &middot; ${returned.length} returned` : ""}${qsN ? ` &middot; ${qsN} quick sale` : ""}</em></button>
+      <button class="dashTile" data-dgo="ready"><span>Ready on every channel</span><b>${rdFmtPct(pct)}</b><em>${R.nReady.toLocaleString()} of ${R.nOn.toLocaleString()} items</em></button>
+      <button class="dashTile ${R.nOn - R.nReady ? "warnT" : ""}" data-dgo="ready"><span>Blocked from a channel</span><b>${(R.nOn - R.nReady).toLocaleString()}</b><em>items missing something a channel needs</em></button>
+      <button class="dashTile" data-dgo="newlist"><span>New this week</span><b>${newWeek === null ? "&ndash;" : newWeek.toLocaleString()}</b><em>by ${esc(nlField().replace(/\s*\(YYYY-MM-DD\)/, ""))}</em></button>
+      <button class="dashTile" data-dgo="workflow"><span>Open requests</span><b>${openReqs.toLocaleString()}</b><em>${drafts.length ? `plus ${drafts.length} draft${drafts.length === 1 ? "" : "s"} of yours` : "submitted, approved or with Pricing"}</em></button>
+    </div>
+    <div class="dashGrid">
+      <div class="dashCol">
+        <div class="dashCard"><h2>Needs your attention</h2>
+          ${att.length ? `<div class="dashReqs">${att.slice(0, 7).join("")}</div>${att.length > 7 ? `<button class="lk" data-dgo="workflow">See all ${att.length} on Workflow &rsaquo;</button>` : ""}` : '<div class="dashEmpty">&#10003; You\'re all caught up. Nothing is waiting on you.</div>'}
+          ${qsN ? `<div class="muted" style="margin-top:8px">${qsN} quick sale item${qsN === 1 ? "" : "s"} still need${qsN === 1 ? "s" : ""} information before going online.</div>` : ""}
+        </div>
+        <div class="dashCard"><h2>Top launch blockers</h2><div class="muted" style="margin-bottom:8px">Fields keeping the most items off a channel</div>
+          ${R.blockers.length ? `<div class="rdBlk">${R.blockers.slice(0, 8).map(([a, n]) => `<div class="rdBlkRow static"><span class="rdBlkName">${esc(a)}</span><span class="rdBlkBar"><i style="width:${Math.max(2, 100 * n / R.blockers[0][1])}%"></i></span><span class="rdBlkN">${n.toLocaleString()}</span></div>`).join("")}</div>` : '<div class="dashEmpty">&#10003; Nothing is blocking a channel.</div>'}
+        </div>
+      </div>
+      <div class="dashCol">
+        <div class="dashCard"><h2>Data quality trend</h2><div class="muted" style="margin-bottom:6px">Share of items ready on every channel they're on, one point a day</div>${dashTrend(H)}</div>
+        <div class="dashCard"><div class="dashCardH"><h2>Readiness by channel</h2><button class="lk" data-dgo="ready">Open readiness &rsaquo;</button></div>
+          <table class="dashCh">${chRows.map(x => `<tr data-dch="${esc(x.c.name)}" title="${x.c.fail.size.toLocaleString()} of ${x.c.on.length.toLocaleString()} not ready"><td>${esc(x.c.name)}</td><td>${rdBarHtml(x.pct)}</td><td class="muted num">${x.c.fail.size ? x.c.fail.size.toLocaleString() + " blocked" : ""}</td></tr>`).join("")}</table>
+        </div>
+      </div>
+    </div>
+    <details class="dashMore"><summary>Catalog details</summary>${homeCatalogHtml()}</details>
+  </div>`;
+  B.querySelectorAll("[data-dgo]").forEach(b => b.onclick = () => { if (sectionAllowed(b.dataset.dgo)) showSection(b.dataset.dgo); });
+  B.querySelectorAll("[data-dreq]").forEach(b => b.onclick = () => openReq(+b.dataset.dreq));
+  B.querySelectorAll("[data-dch]").forEach(b => b.onclick = () => { rd.ch = b.dataset.dch; rd.field = ""; rd.page = 0; showSection("ready"); });
+  B.querySelectorAll(".dashTrend circle[data-tip]").forEach(c => c.addEventListener("mouseenter", () => { const t = $("#dashTip"); if (t) t.textContent = c.dataset.tip; }));
+}
+function dashTrend(H) {
+  if (!H.length) return '<div class="dashEmpty">The trend starts once data is loaded.</div>';
+  const W = 460, Ht = 130, P = {l: 40, r: 12, t: 10, b: 24}, pts = H.slice(-60);
+  const lo = Math.max(0, Math.floor((Math.min(...pts.map(p => p.p)) - 5) / 10) * 10), hi = Math.min(100, Math.ceil((Math.max(...pts.map(p => p.p)) + 5) / 10) * 10);
+  const x = k => P.l + (pts.length === 1 ? (W - P.l - P.r) / 2 : k * (W - P.l - P.r) / (pts.length - 1)), y = v => P.t + (hi - v) * (Ht - P.t - P.b) / Math.max(1, hi - lo);
+  const grid = [lo, (lo + hi) / 2, hi].map(v => `<line x1="${P.l}" x2="${W - P.r}" y1="${y(v)}" y2="${y(v)}" class="g"/><text x="${P.l - 6}" y="${y(v) + 4}" class="ax" text-anchor="end">${Math.round(v)}%</text>`).join("");
+  const line = pts.length > 1 ? `<polyline points="${pts.map((p, k) => `${x(k)},${y(p.p)}`).join(" ")}" class="ln"/>` : "";
+  const dots = pts.map((p, k) => `<circle cx="${x(k)}" cy="${y(p.p)}" r="${k === pts.length - 1 ? 4.5 : 3}" class="${k === pts.length - 1 ? "last" : "pt"}" data-tip="${esc(p.d)}: ${rdFmtPct(p.p)} of ${p.n.toLocaleString()} items ready"><title>${esc(p.d)}: ${rdFmtPct(p.p)} ready</title></circle>`).join("");
+  const lbl = `<text x="${P.l}" y="${Ht - 4}" class="ax">${esc(pts[0].d)}</text>${pts.length > 1 ? `<text x="${W - P.r}" y="${Ht - 4}" class="ax" text-anchor="end">${esc(pts[pts.length - 1].d)}</text>` : ""}`;
+  const last = pts[pts.length - 1], prev = pts.length > 1 ? pts[pts.length - 2] : null, dl = prev ? Math.round((last.p - prev.p) * 10) / 10 : null;
+  return `<div class="dashTrendHead"><b>${rdFmtPct(last.p)}</b> ${dl === null ? '<span class="muted">today &middot; the line fills in a point a day</span>' : `<span class="${dl >= 0 ? "up" : "down"}">${dl >= 0 ? "&#9650;" : "&#9660;"} ${Math.abs(dl)} pts</span> <span class="muted">since ${esc(prev.d)}</span>`}</div>
+    <svg class="dashTrend" viewBox="0 0 ${W} ${Ht}" role="img" aria-label="Readiness trend">${grid}${line}${dots}${lbl}</svg><div class="muted" id="dashTip" style="font-size:12px;min-height:16px"></div>`;
+}
+function homeCatalogHtml() {
+  const fills = columns.map(c => ({c, f: attrFill(c)})).filter(x => x.f);
+  const avg = fills.length ? fills.reduce((s, x) => s + x.f.pct, 0) / fills.length : 0;
+  const low = [...fills].sort((a, b) => a.f.pct - b.f.pct).slice(0, 10);
+  return `<div class="cards">
+      <div class="stat"><b>${master.rows.length.toLocaleString()}</b>Products</div>
+      <div class="stat"><b>${columns.length}</b>Attributes in data</div>
+      <div class="stat"><b>${avg.toFixed(1)}%</b>Average fill rate</div>
+      ${taxTree ? `<div class="stat"><b>${taxTree.subs.length}</b>Subcategories in tree</div>` : ""}
+      ${vendors ? `<div class="stat"><b>${vendors.length}</b>Vendors aligned</div>` : ""}
+      ${lov ? `<div class="stat"><b>${lov.length}</b>Attributes with a list of values</div>` : ""}
+    </div>
+    <h3>Least complete attributes</h3>
+    <div class="tbl2"><table><tr><th>Attribute</th><th>Source file</th><th>Fill %</th></tr>${low.map(x =>
+      `<tr><td>${esc(x.c)}</td><td>${esc(x.f.file)}</td><td><span class="bar"><i style="width:${x.f.pct}%"></i></span> ${x.f.pct.toFixed(1)}%</td></tr>`).join("")}</table></div>`;
+}
+
+$("#rvUpload").onclick = rtPick; $("#ptUpload").onclick = rtPick; $("#revNavUpload").onclick = rtPick;
+
+/* ======================================================================
+   SHARED MODE (Supabase)
+   A config.json next to the page that names a Supabase project turns this
+   on: people sign in with real accounts, and requests, users, roles,
+   settings and the audit log are shared through the database. Others'
+   changes arrive live. Product data files are shared through storage.
+   Without config.json Harim works exactly as before, in this browser.
+
+   Two spaces: "team" (invite-only: the admin adds people by email on
+   Users & roles) and "demo" ("Try the demo": anyone, shared sandbox,
+   emptied every night by the database).
+   Records: one row per request / user / role / ... in harim_docs, so two
+   people working at once don't overwrite each other.
+   ====================================================================== */
+const SB = {on: false, cfg: null, client: null, space: null, email: "", anon: false, admin: false, noAccess: "",
+  synced: new Map(), shared: {}, pendingNew: new Set(), held: new Map(), saving: null, again: false, chan: null, recovery: false, ownAudit: new Set(), hiddenAt: 0};
+const SB_LIB = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4/dist/umd/supabase.js";
+const SB_LOCAL_KEYS = new Set(["cur", "audit"]);   /* per-browser / kept in their own table */
+const SB_SEP = "\u0001";
+const sbLocal = {init: PIMData.init, loadWorkspace: PIMData.loadWorkspace, saveWorkspace: PIMData.saveWorkspace, getRecord: PIMData.getRecord, putRecord: PIMData.putRecord,
+  deleteRecord: PIMData.deleteRecord, getShared: PIMData.getShared, setShared: PIMData.setShared, getSession: PIMData.getSession, setSession: PIMData.setSession,
+  sessionKept: PIMData.sessionKept, autoload: PIMData.source.autoload, auditAdded: PIMData.events.auditAdded};
+const sbHere = () => location.origin + location.pathname;
+const sbDocs = () => SB.client.from("harim_docs");
+function sbLoadLib() {
+  if (window.supabase && window.supabase.createClient) return Promise.resolve();
+  return new Promise((res, rej) => { const s = document.createElement("script"); s.src = SB_LIB; s.onload = res; s.onerror = () => rej(new Error("Couldn't load the sign-in library (needs the internet).")); document.head.appendChild(s); });
+}
+async function sbConfig() {
+  if (window.HARIM_CONFIG) return window.HARIM_CONFIG;
+  if (!/^https?:$/.test(location.protocol)) return null;
+  try { const r = await fetch("config.json", {cache: "no-cache"}); if (r.ok) return await r.json(); } catch (e) {}
+  return null;
+}
+const sbConfigured = c => !!(c && c.supabaseUrl && c.supabaseAnonKey && !/YOUR-|PASTE|example\.com/i.test(c.supabaseUrl + " " + c.supabaseAnonKey));
+
+PIMData.init = async function () {
+  await sbLocal.init.call(PIMData);
+  const cfg = await sbConfig(); if (!sbConfigured(cfg)) return;
+  SB.cfg = Object.assign({team: true, demo: true, teamSpace: "team"}, cfg); SB.on = true; PIMData.shared = true;
+  SB.recovery = /type=recovery/.test(location.hash + location.search);
+  try { await sbLoadLib(); } catch (e) { SB.err = e.message; return; }
+  SB.client = window.supabase.createClient(SB.cfg.supabaseUrl, SB.cfg.supabaseAnonKey, {auth: {persistSession: true, autoRefreshToken: true, detectSessionInUrl: true}});
+  SB.client.auth.onAuthStateChange(ev => { if (ev === "PASSWORD_RECOVERY") { SB.recovery = true; sbLg.step = "recovery"; if (document.body.classList.contains("locked")) renderLogin(); else showLogin(); } });
+  const {data} = await SB.client.auth.getSession();
+  if (data && data.session && !SB.recovery) { try { if (!(await sbResolveSpace(data.session))) sbLg.step = "noaccess"; } catch (e) { sbLg.err = "Couldn't reach the database: " + e.message; } }
+  if (SB.recovery) sbLg.step = "recovery";
+};
+/* which space this person works in, and whether they're an admin there */
+async function sbResolveSpace(session) {
+  const u = session.user || {}; SB.anon = !!u.is_anonymous; SB.email = String(u.email || "").toLowerCase(); SB.space = null; SB.noAccess = "";
+  let want = ""; try { want = sessionStorage.getItem("harim_space") || ""; } catch (e) {}
+  if (SB.anon || want === "demo" || !SB.cfg.team) { SB.space = "demo"; SB.admin = true; return true; }
+  const {data, error} = await SB.client.rpc("harim_whoami"); if (error) throw error;
+  const sp = ((data && data.spaces) || []).find(s => s.space === SB.cfg.teamSpace);
+  if (!sp) { SB.noAccess = data && data.confirmed === false ? "unconfirmed" : "nomember"; return false; }
+  SB.space = sp.space; SB.admin = !!sp.admin; return true;
+}
+
+/* ---------- workspace <-> rows ---------- */
+const sbIdArray = v => Array.isArray(v) && v.length > 0 && v.every(x => x && typeof x === "object" && (typeof x.id === "string" || typeof x.id === "number") && x.id !== "") && new Set(v.map(x => String(x.id))).size === v.length;
+function sbRowsOf(w) {
+  const out = new Map();
+  Object.keys(w).forEach(k => { if (SB_LOCAL_KEYS.has(k) || w[k] === undefined) return; const v = w[k];
+    if (Array.isArray(v) && !v.length) return;   /* an empty list is just "no rows" */
+    if (sbIdArray(v)) v.forEach(x => out.set(k + SB_SEP + x.id, {kind: k, id: String(x.id), data: x}));
+    else out.set("ws" + SB_SEP + k, {kind: "ws", id: k, data: v}); });
+  return out;
+}
+async function sbSelectAll(build) {
+  const out = []; for (let from = 0; ; from += 1000) {
+    const {data, error} = await build().range(from, from + 999); if (error) throw error;
+    out.push(...(data || [])); if (!data || data.length < 1000) return out;
+  }
+}
+PIMData.loadWorkspace = async function () {
+  if (!SB.on) return sbLocal.loadWorkspace.call(PIMData);
+  if (!SB.space) return null;
+  const rows = await sbSelectAll(() => sbDocs().select("kind,id,data,n").eq("space", SB.space).order("n", {ascending: true}));
+  const w = {}; SB.synced = new Map(); SB.shared = {};
+  rows.forEach(r => {
+    if (r.kind === "shared") { SB.shared[r.id] = r.data; return; }
+    if (r.kind === "rec") return;
+    if (r.kind === "ws") { if (!SB_LOCAL_KEYS.has(r.id)) { w[r.id] = r.data; SB.synced.set("ws" + SB_SEP + r.id, JSON.stringify(r.data)); } return; }
+    (w[r.kind] = Array.isArray(w[r.kind]) ? w[r.kind] : []).push(r.data); SB.synced.set(r.kind + SB_SEP + r.id, JSON.stringify(r.data));
+  });
+  const {data: au} = await SB.client.from("harim_audit").select("t,u,action,target,detail").eq("space", SB.space).order("n", {ascending: false}).limit(3000);
+  w.audit = (au || []).reverse().map(a => ({t: a.t, u: a.u || "", action: a.action || "", target: a.target || "", detail: a.detail || ""}));
+  if (Array.isArray(w.requests)) w.seq = Math.max(+w.seq || 1, ...w.requests.map(r => (+r.id || 0) + 1));
+  sbSubscribe();
+  return Object.keys(w).length > 1 ? w : null;
+};
+PIMData.saveWorkspace = async function (w) {
+  if (!SB.on) return sbLocal.saveWorkspace.call(PIMData, w);
+  if (!SB.space) return;
+  if (SB.saving) { SB.again = true; return SB.saving; }
+  SB.saving = sbSave(w).catch(e => setStatus("Couldn't save to the shared workspace: " + e.message)).finally(() => { SB.saving = null; if (SB.again) { SB.again = false; PIMData.saveWorkspace(ws); } });
+  return SB.saving;
+};
+async function sbSave(w) {
+  const rows = sbRowsOf(w), fresh = [], ups = [], dels = [];
+  rows.forEach((r, key) => { const j = JSON.stringify(r.data); if (SB.synced.get(key) === j) return; (SB.synced.has(key) ? ups : fresh).push({key, r, j, prev: SB.synced.get(key)}); SB.synced.set(key, j); });
+  SB.synced.forEach((j, key) => { if (!rows.has(key)) dels.push(key); });
+  const fail = (list, error) => { list.forEach(x => { if (x.prev === undefined) SB.synced.delete(x.key); else SB.synced.set(x.key, x.prev); });
+    if (error && (error.code === "42501" || /row-level security/i.test(error.message || ""))) { list.forEach(x => SB.synced.set(x.key, x.j)); setStatus("Only admins can change users and roles. That change wasn't shared."); return; }
+    throw error; };
+  /* new records: insert (a request number someone else just used gets the next free number) */
+  for (const x of fresh) {
+    SB.pendingNew.add(x.key);
+    const {error} = await sbDocs().insert({space: SB.space, kind: x.r.kind, id: x.r.id, data: x.r.data});
+    SB.pendingNew.delete(x.key); const held = SB.held.get(x.key); SB.held.delete(x.key);
+    if (!error) continue;   /* ours won; theirs gets renumbered on their side */
+    if (error.code === "23505" && x.r.kind === "requests") {
+      SB.synced.delete(x.key); await sbRenumber(x.r.data); SB.again = true;
+      if (held) { sbApplyRow(held.kind, String(held.id), held.data, false); sbRefreshSoon(held.kind); }   /* now take theirs */
+      continue; }
+    if (error.code === "23505") { ups.push(x); continue; }
+    fail([x], error);
+  }
+  /* changed records: upsert in batches of about 2 MB */
+  for (let i = 0; i < ups.length;) {
+    const batch = []; let size = 0; while (i < ups.length && (size < 2e6 || !batch.length)) { size += ups[i].j.length; batch.push(ups[i++]); }
+    const {error} = await sbDocs().upsert(batch.map(x => ({space: SB.space, kind: x.r.kind, id: x.r.id, data: x.r.data})), {onConflict: "space,kind,id"});
+    if (error) fail(batch, error);
+  }
+  for (const key of dels) {
+    const [kind, id] = key.split(SB_SEP); const prev = SB.synced.get(key); SB.synced.delete(key);
+    const {error} = await sbDocs().delete().eq("space", SB.space).eq("kind", kind).eq("id", id);
+    if (error) { SB.synced.set(key, prev); if (!(error.code === "42501")) throw error; }
+  }
+}
+async function sbRenumber(r) {
+  const {data} = await sbDocs().select("id").eq("space", SB.space).eq("kind", "requests");
+  const old = r.id, nu = Math.max(+ws.seq || 1, ...(data || []).map(x => (+x.id || 0) + 1));
+  r.id = nu; ws.seq = nu + 1;
+  (ws.quick || []).forEach(q => { if (q.req === old) q.req = nu; if (q.onlineReq === old) q.onlineReq = nu; });
+  (ws.salesReqs || []).forEach(q => { if (q.req === old) q.req = nu; });
+  (ws.subs || []).forEach(s => { if (Array.isArray(s.reqs)) s.reqs = s.reqs.map(x => x === old ? nu : x); });
+  if (ws.assign && ws.assign["r" + old] !== undefined) { ws.assign["r" + nu] = ws.assign["r" + old]; delete ws.assign["r" + old]; }
+  if (typeof wf !== "undefined" && wf.sel === old) wf.sel = nu;
+  audit("Request renumbered", "#" + nu, `was #${old}: someone else created a request at the same moment`);
+}
+
+/* ---------- live updates from others ---------- */
+function sbSubscribe() {
+  if (SB.chan || !SB.client.channel) return;
+  SB.chan = SB.client.channel("harim-" + SB.space)
+    .on("postgres_changes", {event: "*", schema: "public", table: "harim_docs", filter: "space=eq." + SB.space}, p => sbRemote(p))
+    .on("postgres_changes", {event: "INSERT", schema: "public", table: "harim_audit", filter: "space=eq." + SB.space}, p => sbRemoteAudit(p))
+    .subscribe();
+}
+function sbApplyRow(kind, id, data, del) {
+  const key = (kind === "ws" ? "ws" : kind) + SB_SEP + id;
+  if (kind === "shared") { if (del) delete SB.shared[id]; else SB.shared[id] = data; return true; }
+  if (kind === "rec") return false;
+  if (!del && SB.pendingNew.has(key)) { const j = JSON.stringify(data); if (SB.synced.get(key) !== j) SB.held.set(key, {kind, id, data}); return false; }
+  if (del) { if (!SB.synced.has(key)) return false; SB.synced.delete(key); }
+  else { const j = JSON.stringify(data); if (SB.synced.get(key) === j) return false;
+    /* local unsaved edits on this record win; they're saved over it next */
+    const cur = kind === "ws" ? ws[id] : (Array.isArray(ws[kind]) ? ws[kind].find(x => String(x.id) === id) : undefined);
+    if (cur !== undefined && SB.synced.has(key) && JSON.stringify(cur) !== SB.synced.get(key)) return false;
+    SB.synced.set(key, j); }
+  if (kind === "ws") { if (SB_LOCAL_KEYS.has(id)) return false;
+    if (del) { if (Array.isArray(ws[id])) { if (!sbIdArray(ws[id])) ws[id] = []; } else delete ws[id]; }   /* a list that now has its own rows stays */
+    else ws[id] = data; return true; }
+  const arr = Array.isArray(ws[kind]) ? ws[kind] : (ws[kind] = []); let i = arr.findIndex(x => String(x.id) === id);
+  if (!del && i >= 0 && kind === "requests" && !SB.synced.has(key) && JSON.stringify(arr[i]) !== JSON.stringify(data)) {
+    const mine = arr[i], old = mine.id; mine.id = Math.max(+ws.seq || 1, ...arr.map(x => (+x.id || 0) + 1), (+id || 0) + 1); ws.seq = mine.id + 1;
+    if (typeof wf !== "undefined" && wf.sel === old) wf.sel = mine.id; i = -1; setTimeout(() => wsSave(), 0); }
+  if (del) { if (i >= 0) arr.splice(i, 1); } else if (i >= 0) arr[i] = data; else arr.push(data);
+  if (kind === "requests") ws.seq = Math.max(+ws.seq || 1, (+id || 0) + 1);
+  return true;
+}
+function sbRemote(p) {
+  const del = p.eventType === "DELETE", row = del ? p.old : p.new;
+  if (!row || (row.space && row.space !== SB.space)) return;
+  if (sbApplyRow(row.kind, String(row.id), row.data, del)) sbRefreshSoon(row.kind);
+}
+function sbRemoteAudit(p) {
+  const a = p.new; if (!a || a.space !== SB.space) return;
+  const sig = Date.parse(a.t) + "|" + a.action + "|" + a.target; if (SB.ownAudit.has(sig)) { SB.ownAudit.delete(sig); return; }
+  ws.audit.push({t: a.t, u: a.u || "", action: a.action || "", target: a.target || "", detail: a.detail || ""});
+}
+let sbRefreshT = null, sbRefreshKinds = new Set();
+function sbRefreshSoon(kind) {
+  sbRefreshKinds.add(kind); clearTimeout(sbRefreshT);
+  sbRefreshT = setTimeout(() => {
+    const kinds = sbRefreshKinds; sbRefreshKinds = new Set();
+    if (document.body.classList.contains("locked")) return;
+    try { wfBadge(); } catch (e) {}
+    if (kinds.has("users") || kinds.has("roles")) { const u = ws.users.find(x => x.id === ws.cur); if (!u || !u.active) { alert("Your user was switched off by an admin."); sbSignOut(); return; } }
+    const a = document.activeElement, typing = a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && a.closest("#main, #drawer, #review");
+    if (typing) { setStatus("A teammate made changes. They'll show when you leave this field."); return; }
+    if (["home", "workflow", "team", "pricing", "buys", "cmhome", "salesreq", "updreq", "users", "audit", "ready"].includes(section)) showSection(section);
+    if (selItem && $("#drawer").classList.contains("open") && !$("#review").classList.contains("open")) renderItemView();
+  }, 400);
+}
+/* catch up after the tab was asleep (live updates can be missed) */
+async function sbPull() {
+  if (!SB.space) return;
+  const rows = await sbSelectAll(() => sbDocs().select("kind,id,data,n").eq("space", SB.space).order("n", {ascending: true}));
+  const seen = new Set(); let changed = false;
+  rows.forEach(r => { const key = (r.kind === "ws" ? "ws" : r.kind) + SB_SEP + r.id; seen.add(key); if (sbApplyRow(r.kind, String(r.id), r.data, false)) changed = true; });
+  [...SB.synced.keys()].forEach(key => { if (!seen.has(key)) { const [k, id] = key.split(SB_SEP); if (sbApplyRow(k, id, null, true)) changed = true; } });
+  if (changed) sbRefreshSoon("pull");
+}
+document.addEventListener("visibilitychange", () => {
+  if (!SB.on) return;
+  if (document.hidden) SB.hiddenAt = Date.now(); else if (SB.hiddenAt && Date.now() - SB.hiddenAt > 60000) sbPull().catch(() => {});
+});
+
+/* ---------- audit, shared lists, records, files ---------- */
+PIMData.events.auditAdded = function (e) {
+  sbLocal.auditAdded.call(PIMData.events, e);
+  if (!SB.on || !SB.space) return;
+  SB.ownAudit.add(Date.parse(e.t) + "|" + e.action + "|" + e.target);
+  SB.client.from("harim_audit").insert({space: SB.space, t: e.t, u: e.u, action: e.action, target: e.target, detail: e.detail}).then(r => { if (r && r.error) console.warn("audit", r.error.message); });
+};
+PIMData.getShared = function (key, def) { if (!SB.on || !SB.space) return sbLocal.getShared.call(PIMData, key, def); return key in SB.shared ? SB.shared[key] : def; };
+PIMData.setShared = function (key, value) {
+  if (!SB.on || !SB.space) return sbLocal.setShared.call(PIMData, key, value);
+  if (value === undefined || value === null) { delete SB.shared[key]; sbDocs().delete().eq("space", SB.space).eq("kind", "shared").eq("id", key).then(() => {}); }
+  else { SB.shared[key] = value; sbDocs().upsert({space: SB.space, kind: "shared", id: key, data: value}, {onConflict: "space,kind,id"}).then(r => { if (r.error) setStatus("Couldn't save: " + r.error.message); }); }
+};
+const SB_REC_LOCAL = new Set(["itemLoadSession"]);   /* each person's own work in progress stays in their browser */
+PIMData.getRecord = async function (kind, id) {
+  if (!SB.on || !SB.space || SB_REC_LOCAL.has(kind)) return sbLocal.getRecord.call(PIMData, kind, id);
+  if (kind === "submittedFile") { const {data, error} = await SB.client.storage.from("harim").download(`${SB.space}/files/${id}`); return error ? null : data; }
+  const {data} = await sbDocs().select("data").eq("space", SB.space).eq("kind", "rec").eq("id", kind + ":" + id).limit(1);
+  return data && data[0] ? data[0].data : null;
+};
+PIMData.putRecord = async function (kind, id, value) {
+  if (!SB.on || !SB.space || SB_REC_LOCAL.has(kind)) return sbLocal.putRecord.call(PIMData, kind, id, value);
+  if (kind === "submittedFile") { const {error} = await SB.client.storage.from("harim").upload(`${SB.space}/files/${id}`, value, {upsert: true}); if (error) throw error; return; }
+  const {error} = await sbDocs().upsert({space: SB.space, kind: "rec", id: kind + ":" + id, data: value}, {onConflict: "space,kind,id"}); if (error) throw error;
+};
+PIMData.deleteRecord = async function (kind, id) {
+  if (!SB.on || !SB.space || SB_REC_LOCAL.has(kind)) return sbLocal.deleteRecord.call(PIMData, kind, id);
+  if (kind === "submittedFile") { await SB.client.storage.from("harim").remove([`${SB.space}/files/${id}`]); return; }
+  await sbDocs().delete().eq("space", SB.space).eq("kind", "rec").eq("id", kind + ":" + id);
+};
+/* product data: the team loads the shared data files; the demo loads the demo/ folder */
+PIMData.source.autoload = async function () {
+  if (!SB.on || SB.space === "demo") return sbLocal.autoload.call(PIMData.source);
+  if (master || !SB.space) return;
+  const {data, error} = await SB.client.storage.from("harim").list(SB.space + "/data", {limit: 200});
+  if (error) { setStatus("Couldn't list the shared data files: " + error.message); return; }
+  const names = (data || []).map(x => x.name).filter(n => n && !n.startsWith("."));
+  if (!names.length) { setStatus(SB.admin ? "No shared data yet. Share your data files on Admin › Data import so everyone gets them." : "No shared data yet. Ask an admin to share the data files."); return; }
+  setStatus(`Loading ${names.length} shared data file${names.length === 1 ? "" : "s"}...`);
+  const files = [];
+  for (const n of names) { const r = await SB.client.storage.from("harim").download(`${SB.space}/data/${n}`); if (r.data) files.push(new File([r.data], n)); }
+  await uploadEverything(files);
+  if (master) setStatus(`Loaded ${master.rows.length.toLocaleString()} products from the shared data files.`);
+};
+
+/* ---------- who is signed in ---------- */
+function sbUserFor() {
+  if (!SB.space) return null;
+  if (SB.space === "demo") return ws.users.find(u => u.active && u.role === "admin") || ws.users.find(u => u.active) || null;
+  let u = ws.users.find(x => x.active && String(x.email || "").toLowerCase() === SB.email);
+  if (!u && SB.admin && !ws.users.some(x => x.email)) {   /* the owner's first sign-in: they become the built-in Administrator */
+    u = ws.users.find(x => x.active && x.role === "admin"); if (u) { u.email = SB.email; wsSave(); }
+  }
+  return u || null;
+}
+PIMData.getSession = function () {
+  if (!SB.on) return sbLocal.getSession.call(PIMData);
+  const real = sbUserFor(); if (!real) return null;
+  let imp = null; try { imp = JSON.parse(sessionStorage.getItem("harim_imp") || "null"); } catch (e) {}
+  return imp && imp.from === real.id && ws.users.some(u => u.id === imp.uid && u.active) ? imp : {uid: real.id, t: nowISO()};
+};
+PIMData.setSession = function (o, keep) {
+  if (!SB.on) return sbLocal.setSession.call(PIMData, o, keep);
+  const real = sbUserFor();
+  try { if (o && real && o.uid !== real.id) sessionStorage.setItem("harim_imp", JSON.stringify(o)); else sessionStorage.removeItem("harim_imp"); } catch (e) {}
+};
+PIMData.sessionKept = function () { return SB.on ? true : sbLocal.sessionKept.call(PIMData); };
+
+/* ---------- sign-in screens ---------- */
+let sbLg = {step: "signin", email: "", err: "", msg: ""};
+const sbLocalRender = renderLogin, sbLocalSubmit = loginSubmit, sbLocalSignOut = signOut;
+renderLogin = function () {
+  if (!SB.on) return sbLocalRender();
+  const L = sbLg, team = SB.cfg.team !== false, demo = SB.cfg.demo !== false;
+  const field = (id, label, type, ac, val = "") => `<label class="lgF"><span>${label}</span><input class="in" id="${id}" type="${type}" autocomplete="${ac}" value="${esc(val)}"></label>`;
+  const demoBox = demo ? `<div class="lgSetup sbDemo"><b>Just looking?</b> Try Harim with 10,000 sample products. The demo is shared with other visitors and resets every night.
+      <button class="outline" type="button" data-sb="demo" style="margin-top:8px;width:100%">Try the demo</button></div>` : "";
+  let title = "Sign in", sub = "product information", form = "", links = "";
+  if (SB.err) { title = "Can't start"; sub = esc(SB.err); }
+  else if (L.step === "busy") { title = "Signing in..."; sub = "Loading your workspace"; }
+  else if (L.step === "noaccess") { title = "No access yet";
+    sub = SB.noAccess === "unconfirmed" ? `You're signed in as <b>${esc(SB.email)}</b>, but that email isn't confirmed yet. Open the link in the email we sent, then sign in again.`
+      : SB.noAccess === "nouser" ? `<b>${esc(SB.email)}</b> is on the team, but there's no active Harim user with that email. Ask your admin to check Users &amp; roles.`
+      : `<b>${esc(SB.email)}</b> isn't on the team yet. Ask your Harim admin to add your email on Admin › Users &amp; roles.`;
+    form = `<button class="primary lgGo" type="button" data-sb="out">Sign out</button>`; }
+  else if (L.step === "recovery") { title = "Choose a new password"; sub = "At least 8 characters.";
+    form = field("sbPw", "New password", "password", "new-password") + field("sbPw2", "Type it again", "password", "new-password") + `<button class="primary lgGo" type="submit">Save password</button>`; }
+  else if (L.step === "signup") { title = "Create your password"; sub = "For people your admin has added to Harim. Use the email they added.";
+    form = field("sbEmail", "Work email", "email", "username", L.email) + field("sbPw", "Password", "password", "new-password") + field("sbPw2", "Type it again", "password", "new-password") + `<button class="primary lgGo" type="submit">Create password</button>`;
+    links = `<button class="lk" type="button" data-sb="signin">&lsaquo; Back to sign in</button>`; }
+  else if (L.step === "forgot") { title = "Reset your password"; sub = "We'll email you a link to choose a new one.";
+    form = field("sbEmail", "Work email", "email", "username", L.email) + `<button class="primary lgGo" type="submit">Email me a link</button>`;
+    links = `<button class="lk" type="button" data-sb="signin">&lsaquo; Back to sign in</button>`; }
+  else if (team) {
+    form = field("sbEmail", "Work email", "email", "username", L.email) + field("sbPw", "Password", "password", "current-password") + `<button class="primary lgGo" type="submit">Sign in</button>`;
+    links = `<button class="lk" type="button" data-sb="forgot">Forgot password?</button><span class="muted">&middot;</span><button class="lk" type="button" data-sb="signup">First time here? Create your password</button>`; }
+  else { title = "Harim demo"; sub = "Shared sample workspace"; }
+  $("#loginBody").innerHTML = `<div class="lgCard">
+    <div class="lgLogo">Harim</div><h1>${title}</h1><div class="muted" style="margin-bottom:18px">${sub}</div>
+    ${form ? `<form id="lgForm" autocomplete="on">${form}</form>` : ""}
+    ${L.err ? `<div class="lgErr">${esc(L.err)}</div>` : ""}${L.msg ? `<div class="sbMsg">${esc(L.msg)}</div>` : ""}
+    ${links ? `<div class="sbLinks">${links}</div>` : ""}
+    ${["signin", "noaccess"].includes(L.step) || (!team && L.step !== "busy") ? demoBox : ""}
+  </div>`;
+  const f = $("#loginBody input"); if (f) setTimeout(() => (L.email && $("#sbPw") ? $("#sbPw") : f).focus(), 0);
+};
+const sbErrText = e => { const m = (e && e.message) || String(e);
+  if (/invalid login credentials/i.test(m)) return "That email and password don't match.";
+  if (/email not confirmed/i.test(m)) return "Confirm your email first: open the link we sent you.";
+  if (/anonymous sign-ins are disabled/i.test(m)) return "The demo isn't switched on for this site yet (an admin turns on anonymous sign-ins in Supabase).";
+  if (/rate limit/i.test(m)) return "Too many tries, or too many emails sent this hour. Wait a bit and try again.";
+  if (/not authorized|sending (confirmation|recovery|magic)|smtp|email.*(send|deliver)/i.test(m)) return "This site can't send email to that address yet. Ask your Harim admin to create your account for you.";
+  return m; };
+loginSubmit = async function () {
+  if (!SB.on) return sbLocalSubmit();
+  const L = sbLg, v = id => ($(id) ? $(id).value.trim() : ""), pw = $("#sbPw") ? $("#sbPw").value : "", pw2 = $("#sbPw2") ? $("#sbPw2").value : "";
+  L.err = ""; L.msg = ""; if ($("#sbEmail")) L.email = v("#sbEmail");
+  const A = SB.client.auth;
+  try {
+    if (L.step === "recovery") {
+      if (pw.length < 8) throw new Error("Use at least 8 characters."); if (pw !== pw2) throw new Error("The two passwords don't match.");
+      const {error} = await A.updateUser({password: pw}); if (error) throw error;
+      SB.recovery = false; history.replaceState(null, "", sbHere()); L.step = "signin"; L.msg = "Password saved.";
+      const {data} = await A.getSession(); if (data.session) return sbEnter(data.session);
+      return renderLogin();
+    }
+    if (!L.email) throw new Error("Enter your work email.");
+    if (L.step === "forgot") { const {error} = await A.resetPasswordForEmail(L.email, {redirectTo: sbHere()}); if (error) throw error;
+      L.step = "signin"; L.msg = `If ${L.email} has an account, a reset link is on its way.`; return renderLogin(); }
+    if (L.step === "signup") {
+      if (pw.length < 8) throw new Error("Use at least 8 characters."); if (pw !== pw2) throw new Error("The two passwords don't match.");
+      const {data, error} = await A.signUp({email: L.email, password: pw, options: {emailRedirectTo: sbHere()}}); if (error) throw error;
+      if (data.session) return sbEnter(data.session);
+      L.step = "signin"; L.msg = `Check ${L.email} for a link to confirm your email, then sign in here.`; return renderLogin();
+    }
+    const {data, error} = await A.signInWithPassword({email: L.email, password: pw}); if (error) throw error;
+    try { sessionStorage.removeItem("harim_space"); } catch (e) {}
+    return sbEnter(data.session);
+  } catch (e) { L.err = sbErrText(e); renderLogin(); }
+};
+async function sbEnter(session) {
+  sbLg.step = "busy"; sbLg.err = ""; renderLogin();
+  try {
+    if (!(await sbResolveSpace(session))) { sbLg.step = "noaccess"; return renderLogin(); }
+    if (SB.chan) { try { SB.client.removeChannel(SB.chan); } catch (e) {} SB.chan = null; }
+    wsApply(await PIMData.loadWorkspace());
+    const u = sbUserFor(); if (!u) { SB.noAccess = "nouser"; sbLg.step = "noaccess"; return renderLogin(); }
+    sbLg = {step: "signin", email: "", err: "", msg: ""};
+    loginAs(u, true); sbPill();
+    if (SB.space === "demo") setStatus("You're in the shared demo. Everyone trying the demo sees the same data; it resets every night.");
+  } catch (e) { sbLg.step = "signin"; sbLg.err = "Couldn't open the workspace: " + sbErrText(e); renderLogin(); }
+}
+async function sbDemo() {
+  sbLg.err = "";
+  try {
+    const {data} = await SB.client.auth.getSession();
+    if (data.session && !data.session.user.is_anonymous) { try { sessionStorage.setItem("harim_space", "demo"); } catch (e) {} return sbEnter(data.session); }
+    if (data.session) return sbEnter(data.session);
+    const r = await SB.client.auth.signInAnonymously(); if (r.error) throw r.error;
+    return sbEnter(r.data.session);
+  } catch (e) { sbLg.err = sbErrText(e); renderLogin(); }
+}
+async function sbSignOut() {
+  try { audit("Signed out", me().name); } catch (e) {}
+  try { await PIMData.saveWorkspace(ws); } catch (e) {}
+  try { sessionStorage.removeItem("harim_space"); sessionStorage.removeItem("harim_imp"); } catch (e) {}
+  try { await SB.client.auth.signOut(); } catch (e) {}
+  location.replace(sbHere());
+}
+signOut = function () { if (!SB.on) return sbLocalSignOut(); sbSignOut(); };
+$("#loginBody").addEventListener("click", e => {
+  const b = e.target.closest("[data-sb]"); if (!b || !SB.on) return;
+  const k = b.dataset.sb; sbLg.err = ""; sbLg.msg = "";
+  if (k === "demo") return sbDemo();
+  if (k === "out") return sbSignOut();
+  if ($("#sbEmail")) sbLg.email = $("#sbEmail").value.trim();
+  sbLg.step = k; renderLogin();
+});
+/* user menu: password changes and sign-out go through the account */
+$("#userMenu").addEventListener("click", e => {
+  if (!SB.on) return;
+  if (e.target.id === "umOut") { e.stopImmediatePropagation(); $("#userMenu").classList.remove("open"); sbSignOut(); return; }
+  if (e.target.id === "umPw") { e.stopImmediatePropagation(); $("#userMenu").classList.remove("open");
+    if (SB.space === "demo") { alert("Demo visitors don't have a password. Sign out to leave the demo."); return; }
+    const a = prompt("New password (at least 8 characters):"); if (!a) return; if (a.length < 8) { alert("Use at least 8 characters."); return; }
+    if (prompt("Type the new password again:") !== a) { alert("They don't match. Nothing changed."); return; }
+    SB.client.auth.updateUser({password: a}).then(({error}) => { if (error) alert("Couldn't change it: " + error.message); else { audit("Password changed", me().name); setStatus("Password changed."); } }); }
+}, true);
+/* which space you're in */
+function sbPill() {
+  let p = $("#sbPill"); if (!p) { p = document.createElement("span"); p.id = "sbPill"; $("#userChip").before(p); }
+  p.className = "sbPill " + (SB.space === "demo" ? "demo" : "team");
+  p.textContent = SB.space === "demo" ? "Shared demo · resets nightly" : "Team · shared";
+  p.title = SB.space === "demo" ? "Everyone trying the demo shares this workspace. It's emptied every night." : "Signed in as " + SB.email + ". Changes are saved for your whole team.";
+}
+
+/* ---------- Admin pages in shared mode ---------- */
+const sbShow = showSection;
+showSection = function (name) {
+  sbShow(name);
+  if (!SB.on || !SB.space) return;
+  if (name === "import") sbRenderFiles();
+  if (name === "users") sbUsersNote();
+};
+function sbUsersNote() {
+  let n = $("#sbUsersNote"); if (!n) { n = document.createElement("div"); n.id = "sbUsersNote"; $("#v-users").prepend(n); }
+  n.innerHTML = SB.space === "demo" ? `<div class="sbNote">This is the shared demo: anyone can try any user here. Real accounts live in the team space.</div>`
+    : `<div class="sbNote"><b>Shared team space.</b> People sign in with the <b>email</b> on their user here. Add a user with their work email, then send them this site's link: they choose <i>First time here? Create your password</i>. Switching a user off removes their access. Only admins can change users and roles.</div>`;
+}
+async function sbRenderFiles() {
+  let box = $("#sbFiles"); if (!box) { box = document.createElement("div"); box.id = "sbFiles"; $("#v-import .page").prepend(box); }
+  if (SB.space === "demo") { box.innerHTML = `<div class="sbNote">The demo loads its sample data automatically for everyone.</div>`; return; }
+  box.innerHTML = `<div class="card adm sbFilesCard"><h3>Shared data files</h3><div class="muted">Loaded automatically for everyone on the team when they sign in. (<b>Upload everything</b> further down only loads files into your own browser.)</div><div id="sbFileList" class="muted">Loading...</div></div>`;
+  const {data, error} = await SB.client.storage.from("harim").list(SB.space + "/data", {limit: 200});
+  const L = $("#sbFileList"); if (!L) return;
+  if (error) { L.textContent = "Couldn't list them: " + error.message; return; }
+  const list = (data || []).filter(x => x.name && !x.name.startsWith("."));
+  const kb = n => n > 1048576 ? (n / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(n / 1024)) + " KB";
+  L.innerHTML = (list.length ? `<table class="sbFT">${list.map(x => `<tr><td>${esc(x.name)}</td><td class="muted">${x.metadata && x.metadata.size ? kb(x.metadata.size) : ""}</td><td class="muted">${x.updated_at ? esc(fmtT(x.updated_at)) : ""}</td>
+      <td>${SB.admin ? `<button class="lk" data-sbrm="${esc(x.name)}">Remove</button>` : ""}</td></tr>`).join("")}</table>` : "<p>None yet.</p>")
+    + (SB.admin ? `<label class="outline sbUp">Share files...<input type="file" id="sbUpIn" multiple accept=".csv,.xlsx,.xls" hidden></label> <span class="muted" style="font-size:12px">Same files as Upload everything: the product export (CSV) and the reference workbooks. A file with the same name replaces the old one.</span>` : "");
+  if ($("#sbUpIn")) $("#sbUpIn").onchange = async e => {
+    const fs = [...e.target.files]; e.target.value = ""; if (!fs.length) return;
+    for (const f of fs) { setStatus(`Sharing ${f.name}...`); const {error} = await SB.client.storage.from("harim").upload(`${SB.space}/data/${f.name}`, f, {upsert: true}); if (error) { alert(`Couldn't share ${f.name}: ${error.message}`); break; } }
+    audit("Shared data files", fs.map(f => f.name).join(", ")); setStatus(`Shared ${fs.length} file${fs.length === 1 ? "" : "s"}. Everyone gets them at their next sign-in.`); sbRenderFiles();
+    if (!master) PIMData.source.autoload().catch(err => setStatus("Couldn't load them: " + err.message));
+  };
+  L.querySelectorAll("[data-sbrm]").forEach(b => b.onclick = async () => {
+    if (!confirm(`Stop sharing ${b.dataset.sbrm}?`)) return;
+    const {error} = await SB.client.storage.from("harim").remove([`${SB.space}/data/${b.dataset.sbrm}`]);
+    if (error) alert(error.message); else { audit("Removed shared file", b.dataset.sbrm); sbRenderFiles(); }
+  });
+}
+
+function sbAfterLoad() {
+  if (!SB.on || !SB.space) return;
+  const u = sbUserFor(); if (!u) { SB.noAccess = "nouser"; sbLg.step = "noaccess"; } else sbPill();
+}
+wsInit();
 
 /* demo mode: a demo/ folder next to the page turns on the demo sign-in hint and auto-loading */
 if (/^https?:$/.test(location.protocol)) fetch("demo/manifest.json", {cache: "no-cache"}).then(r => { if (r.ok) { window.PIM_DEMO = true; if (document.body.classList.contains("locked")) renderLogin(); } }).catch(() => {});
