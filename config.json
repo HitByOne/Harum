@@ -1,6 +1,6 @@
 {
-  "supabaseUrl": "PASTE-YOUR-PROJECT-URL",
-  "supabaseAnonKey": "PASTE-YOUR-PUBLISHABLE-KEY",
+  "supabaseUrl": "https://ixkzkckgcwytktwpgset.supabase.co",
+  "supabaseAnonKey": "sb_publishable_dd3C4bMe75M-0pgOlba9JA_Lvq4V6Bi",
   "team": true,
   "demo": true
 }
