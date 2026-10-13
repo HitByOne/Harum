@@ -998,7 +998,7 @@
 
 <div id="modal" class="modalbg"><div class="box">
   <b>Select items by ID</b>
-  <div class="muted" style="font-size:12px">One per line, or separated by commas / semicolons. Matches Item Number, Supplier Part Number, ERPItemNo or &lt;ID&gt;.</div>
+  <div class="muted" style="font-size:12px">One per line, or separated by commas / semicolons. Matches Item Number, Supplier Part Number, ERP Item Number or &lt;ID&gt;.</div>
   <textarea id="pasteBox" placeholder="KDT80304S-06&#10;KDT80560"></textarea>
   <div id="pasteResult" class="muted" style="margin-bottom:8px"></div>
   <div style="text-align:right"><button class="b" id="pasteCancel">Cancel</button> <button class="b go" id="pasteGo">Add to selection</button></div>
@@ -1032,13 +1032,13 @@
 */
 const ID = "<ID>", PN = "Item Number";
 /* the categorization CSV links each item to the category tree <ID> through this column */
-const CLASS_REF = "Product Category_SubCategory Classification Reference";
-const isClassRef = c => { const k = normH(c); return k === normH(CLASS_REF) || (k.includes("categorysubcategory") && k.includes("classificationreference")); };
+const CLASS_REF = "Category Classification ID";
+const isClassRef = c => { const k = normH(c); return k === normH(CLASS_REF) || (k.includes("categorysubcategory") && k.includes("classificationreference")) || k === "categoryclassificationid"; };
 let classRefCol = null;
 const CATEGORY_COLS = [CLASS_REF, "Product Category-Subcategory","Category","Legacy Category","Legacy Category"];
 const TABLE_COLS = ["Item Number","Supplier Part Number","Product Title","Marketing Brand Name","Supplier","Supplier ID","UPC (GTIN)","<ID>"];
 const EXTRA_COLS = [...new Set([...TABLE_COLS, ...CATEGORY_COLS])];
-const WANT_SEARCH = [...new Set([...EXTRA_COLS, "ERPItemNo","Product ID","<Name>","Case GTIN"])];
+const WANT_SEARCH = [...new Set([...EXTRA_COLS, "ERP Item Number","Product ID","<Name>","Case GTIN"])];
 const CORE_GROUPS = ["Item Identifiers","Item Classification","Product Attributes","Supplier Details","Product Descriptions","Barcodes & Channel IDs","Dimensions & Weight","Trade Compliance","Purchasing & Case Pack","Warehouses"];
 const CHUNK = 32 * 1024 * 1024, MAX_REVIEW = 500, PREVIEW_ROWS = 25;
 const CUSTOM_KEY = "pim_custom_groups", PRESET_KEY = "pim_export_presets";
@@ -1621,7 +1621,7 @@ function loadAttrModel(sheets, fname) {
 }
 /* model attribute -> data column: exact name, name without "(...)", or Attribute ID */
 let colByNorm = null, colByNormKey = null;
-const KNOWN_FIELDS = [["<ID>","ID","Item Identifiers"],["Item Number","Item_Number","Item Identifiers"],["Supplier Part Number","Supplier_Part_Number","Item Identifiers"],["ERPItemNo","ERPItemNo","Item Identifiers"],["Product Category_SubCategory Classification Reference","Product_Category_SubCategory_Classification_Reference","Item Classification"],["PIM_Cat_Subcat_concat","PIM_Cat_Subcat_concat","Item Classification"],["Product Type ID","Product_Type_ID","Item Classification"],["Buyer Name","Buyer_Name","Item Classification"],["Buyer ID","Buyer_ID","Item Classification"],["Category Manager","Category_Manager","Item Classification"],["Inventory Category (Prefix)","Prefix","Item Classification"],["Inventory Group","a_InventoryGroup","Item Classification"],["Product Line","Product_Line","Item Classification"],["Price Group","Price_Group","Item Classification"],["Supplier ID","Supplier_ID","Supplier Details"],["Supplier Name","Supplier_Name","Supplier Details"],["Vendor Category","Vendor_Category","Supplier Details"],["Product Title","Product_Title","Product Descriptions"],["Product Web Title_Calc","Product_Web_Title_Calc","Product Descriptions"],["Long ERP Description","Long_ERP_Description","Product Descriptions"],["Short ERP Description","Short_ERP_Description","Product Descriptions"],["Marketing Brand Name","Marketing_Brand_Name","Product Descriptions"],["Product Features and Benefits (Web)","Product_Features_and_Benefits_Web","Product Descriptions"],["Supplier Descriptive Paragraph","Supplier_Descriptive_Paragraph","Product Descriptions"],["Product Descriptive Paragraph (Web)","Product_Descriptive_Paragraph_Web","Product Descriptions"],["Included Components","Included_Components","Product Descriptions"],["Disclaimer","Disclaimer","Product Descriptions"],["Web Search Keywords","Web_Search_Keywords","Product Descriptions"],["Has UPC","Has_UPC","Barcodes & Channel IDs"],["UPC (GTIN)","UPC_GTIN","Barcodes & Channel IDs"],["Case GTIN","Case_GTIN","Barcodes & Channel IDs"],["Unit Cost","Unit_Cost","Supplier Cost & List Pricing"],["Distributor Pricing","Distributor_Pricing","Supplier Cost & List Pricing"],["Wholesale Pricing","Wholesale_Pricing","Supplier Cost & List Pricing"],["List Pricing","List_Pricing","Supplier Cost & List Pricing"],["MAPP Pricing","MAPP_Pricing","Supplier Cost & List Pricing"],["Retail Price","Retail_Price","Pricing"],["Retail Price Margin","Retail_Price_Margin","Pricing"],["Member Price","Member_Price","Pricing"],["Member Price Margin","Member_Price_Margin","Pricing"],["Outlet Price","Outlet_Price","Pricing"],["Outlet Price Margin","Outlet_Price_Margin","Pricing"],["Promo Price","Promo_Price","Pricing"],["Promo Price Margin","Promo_Price_Margin","Pricing"],["Special Retail","Special_Retail","Pricing"],["TMR-WD","TMR_WD","Pricing"],["TMR-WS","TMR_WS","Pricing"],["Minimum Order Qty","Minimum_Order_Qty","Purchasing & Case Pack"],["Pack Size","Pack_Size","Purchasing & Case Pack"],["Package Type","PackageType","Purchasing & Case Pack"],["Purchasing Unit","PuchasingUnit","Purchasing & Case Pack"],["Estimated Lead Time","Estimated_Lead_Time","Purchasing & Case Pack"],["Has Case Pack (Y/N)","HasCasePack","Purchasing & Case Pack"],["Case Qty","Case_Qty","Purchasing & Case Pack"],["Case Purchasing Requirement","CasePurchReq","Purchasing & Case Pack"],["Broken Case Purchasing","BrokenCasePurchasing","Purchasing & Case Pack"],["Pallet Qty","Pallet_Qty","Purchasing & Case Pack"],["Number of Cases per Pallet Level","Number_of_Cases_per_Pallet_Level","Purchasing & Case Pack"],["Number of Levels per Pallet","Number_of_Levels_per_Pallet","Purchasing & Case Pack"],["Initial Stocking","Initial_Stocking","Inventory & Replenishment"],["Reorder","Reorder","Inventory & Replenishment"],["Forecast Profile","Forecast_Profile","Inventory & Replenishment"],["East DC","East DC","Warehouses"],["Central DC","Central DC","Warehouses"],["West DC","West DC","Warehouses"],["North DC","North DC","Warehouses"],["Warehouse Inventory","Warehouse_Inventory","Warehouses"],["Warehouse Inventory Qty","Warehouse_Inventory_Qty","Warehouses"],["Supersedes","Supersedes","Lifecycle & Supersession"],["Supersession Effective Date","Supersession_Effective_Date","Lifecycle & Supersession"],["Length (Product)","Length_Product","Dimensions & Weight"],["Width (Product)","Width_Product","Dimensions & Weight"],["Height (Product)","Height_Product","Dimensions & Weight"],["Weight (Product)","Weight_Product","Dimensions & Weight"],["Length (Case)","Length_Case","Dimensions & Weight"],["Width (Case)","Width_Case","Dimensions & Weight"],["Height (Case)","Height_Case","Dimensions & Weight"],["Weight (Case)","Weight_Case","Dimensions & Weight"],["Length (Shipping)","Length_Shipping","Dimensions & Weight"],["Width (Shipping)","Width_Shipping","Dimensions & Weight"],["Height (Shipping)","Height_Shipping","Dimensions & Weight"],["Weight (Shipping)","Weight_Shipping","Dimensions & Weight"],["Weight Unit (Buying)","Weight_Unit_Buying","Dimensions & Weight"],["Country of Origin (Primary)","Country_of_Origin","Trade Compliance, Shipping & Hazmat"],["Harmonized Tariff Code (HTS)","Harmonized_Tariff_Code_HTS","Trade Compliance, Shipping & Hazmat"],["Shipping Restrictions","Shipping_Restrictions","Trade Compliance, Shipping & Hazmat"],["Drop Ship Only","Drop_Ship_Only","Trade Compliance, Shipping & Hazmat"],["LTL","LTL","Trade Compliance, Shipping & Hazmat"],["Hazardous Material Code","Hazardous_Material_Code","Trade Compliance, Shipping & Hazmat"],["Hazardous Material Notes","Hazardous_Material_Notes","Trade Compliance, Shipping & Hazmat"],["ORMD_Flag","ORMD_Flag","Trade Compliance, Shipping & Hazmat"],["DOT Regulation","DOT_Regulation","Trade Compliance, Shipping & Hazmat"],["UN Number ID_Calc","UN_Number_ID_Calc","Trade Compliance, Shipping & Hazmat"],["Lithium","Lithium","Trade Compliance, Shipping & Hazmat"],["Category - French","Category_ French","Canada"],["Warranty Policy - French","Warranty_Policy_French","Canada"],["CANADA Harmonized Tariff Code (HTS)","CANADA_Harmonized_Tariff_Code_HTS","Canada"],["Requires Prop 65 Warning","Requires_Prop_65_Warning","Regulatory Warnings (Prop 65 & VOC)"],["Prop 65 Warning Type","Prop_65_Warning_Type","Regulatory Warnings (Prop 65 & VOC)"],["Prop 65 Short Warning","Prop_65_Short_Warning","Regulatory Warnings (Prop 65 & VOC)"],["Prop 65 Specific Warning","Prop_65_Specific_Warning","Regulatory Warnings (Prop 65 & VOC)"],["Warranty Policy","Warranty_Policy","Returns & Warranty"],["Other Warranty","Other_Warranty","Returns & Warranty"],["Is Repairable","Is_Repairable","Returns & Warranty"],["Guaranteed Return","Guaranteed_Return","Returns & Warranty"],["Marketing Date (YYYY-MM-DD)","Marketing_Date_YYYY_MM_DD","Web Launch"],["Available to Ship Date (YYYY-MM-DD)","Available_to_Ship_Date_YYYY_MM_DD","Web Launch"],["Is this Item going on the web?","Syndicate_to_Online_Marketplaces","Web Launch"],["PIM","PIM","Channel Outputs"],["ERP","ERP","Channel Outputs"],["Website","Website","Channel Outputs"],["Amazon","Amazon","Channel Outputs"],["Distributor","Distributor","Channel Outputs"],["Canada","Canada","Channel Outputs"],["Syndication Flags","Syndication_Flags","Channel Outputs"],["Supplier Image URLs","Supplier_Image_URLs","Assets & Documents"],["Supplier Video URLs","Supplier_Video_URLs","Assets & Documents"],["Item URL","Item_URL","Assets & Documents"],["Owners Manual URL","Owners_Manual_URL","Assets & Documents"],["Parts Breakdown URL","Parts_Breakdown_URL","Assets & Documents"],["SDS Sheet URL","SDS_Sheet_URL","Assets & Documents"],["TDS Sheet URL","TDS_Sheet_URL","Assets & Documents"],["Battery Test Summary URL","Battery_Test_Summary_URL","Assets & Documents"],["Onboarding Status","Onboarding_Status","Item MDM & Syndication"],["Last Syndicated","Last_Syndicated","Item MDM & Syndication"],["LastUpdated","LastUpdated","Item MDM & Syndication"],["PIM Intro Date","PIM_Intro_Date","Workflow Dates"],["NPI End Date","NPI_End_Date","Workflow Dates"]];
+const KNOWN_FIELDS = [["<ID>","ID","Item Identifiers"],["Item Number","Item_Number","Item Identifiers"],["Supplier Part Number","Supplier_Part_Number","Item Identifiers"],["ERP Item Number","ERPItemNo","Item Identifiers"],["Category Classification ID","Product_Category_SubCategory_Classification_Reference","Item Classification"],["Category and Subcategory","PIM_Cat_Subcat_concat","Item Classification"],["Product Type ID","Product_Type_ID","Item Classification"],["Buyer Name","Buyer_Name","Item Classification"],["Buyer ID","Buyer_ID","Item Classification"],["Category Manager","Category_Manager","Item Classification"],["Inventory Category (Prefix)","Prefix","Item Classification"],["Inventory Group","a_InventoryGroup","Item Classification"],["Product Line","Product_Line","Item Classification"],["Price Group","Price_Group","Item Classification"],["Supplier ID","Supplier_ID","Supplier Details"],["Supplier Name","Supplier_Name","Supplier Details"],["Vendor Category","Vendor_Category","Supplier Details"],["Product Title","Product_Title","Product Descriptions"],["Product Web Title","Product_Web_Title_Calc","Product Descriptions"],["Long ERP Description","Long_ERP_Description","Product Descriptions"],["Short ERP Description","Short_ERP_Description","Product Descriptions"],["Marketing Brand Name","Marketing_Brand_Name","Product Descriptions"],["Product Features and Benefits (Web)","Product_Features_and_Benefits_Web","Product Descriptions"],["Supplier Descriptive Paragraph","Supplier_Descriptive_Paragraph","Product Descriptions"],["Product Descriptive Paragraph (Web)","Product_Descriptive_Paragraph_Web","Product Descriptions"],["Included Components","Included_Components","Product Descriptions"],["Disclaimer","Disclaimer","Product Descriptions"],["Web Search Keywords","Web_Search_Keywords","Product Descriptions"],["Has UPC","Has_UPC","Barcodes & Channel IDs"],["UPC (GTIN)","UPC_GTIN","Barcodes & Channel IDs"],["Case GTIN","Case_GTIN","Barcodes & Channel IDs"],["Unit Cost","Unit_Cost","Supplier Cost & List Pricing"],["Distributor Pricing","Distributor_Pricing","Supplier Cost & List Pricing"],["Wholesale Pricing","Wholesale_Pricing","Supplier Cost & List Pricing"],["List Pricing","List_Pricing","Supplier Cost & List Pricing"],["MAPP Pricing","MAPP_Pricing","Supplier Cost & List Pricing"],["Retail Price","Retail_Price","Pricing"],["Retail Price Margin","Retail_Price_Margin","Pricing"],["Member Price","Member_Price","Pricing"],["Member Price Margin","Member_Price_Margin","Pricing"],["Outlet Price","Outlet_Price","Pricing"],["Outlet Price Margin","Outlet_Price_Margin","Pricing"],["Promo Price","Promo_Price","Pricing"],["Promo Price Margin","Promo_Price_Margin","Pricing"],["Special Retail","Special_Retail","Pricing"],["TMR-WD","TMR_WD","Pricing"],["TMR-WS","TMR_WS","Pricing"],["Minimum Order Qty","Minimum_Order_Qty","Purchasing & Case Pack"],["Pack Size","Pack_Size","Purchasing & Case Pack"],["Package Type","PackageType","Purchasing & Case Pack"],["Purchasing Unit","PuchasingUnit","Purchasing & Case Pack"],["Estimated Lead Time","Estimated_Lead_Time","Purchasing & Case Pack"],["Has Case Pack (Y/N)","HasCasePack","Purchasing & Case Pack"],["Case Qty","Case_Qty","Purchasing & Case Pack"],["Case Purchasing Requirement","CasePurchReq","Purchasing & Case Pack"],["Broken Case Purchasing","BrokenCasePurchasing","Purchasing & Case Pack"],["Pallet Qty","Pallet_Qty","Purchasing & Case Pack"],["Number of Cases per Pallet Level","Number_of_Cases_per_Pallet_Level","Purchasing & Case Pack"],["Number of Levels per Pallet","Number_of_Levels_per_Pallet","Purchasing & Case Pack"],["Initial Stocking","Initial_Stocking","Inventory & Replenishment"],["Reorder","Reorder","Inventory & Replenishment"],["Forecast Profile","Forecast_Profile","Inventory & Replenishment"],["East DC","East DC","Warehouses"],["Central DC","Central DC","Warehouses"],["West DC","West DC","Warehouses"],["North DC","North DC","Warehouses"],["Warehouse Inventory","Warehouse_Inventory","Warehouses"],["Warehouse Inventory Qty","Warehouse_Inventory_Qty","Warehouses"],["Supersedes","Supersedes","Lifecycle & Supersession"],["Supersession Effective Date","Supersession_Effective_Date","Lifecycle & Supersession"],["Length (Product)","Length_Product","Dimensions & Weight"],["Width (Product)","Width_Product","Dimensions & Weight"],["Height (Product)","Height_Product","Dimensions & Weight"],["Weight (Product)","Weight_Product","Dimensions & Weight"],["Length (Case)","Length_Case","Dimensions & Weight"],["Width (Case)","Width_Case","Dimensions & Weight"],["Height (Case)","Height_Case","Dimensions & Weight"],["Weight (Case)","Weight_Case","Dimensions & Weight"],["Length (Shipping)","Length_Shipping","Dimensions & Weight"],["Width (Shipping)","Width_Shipping","Dimensions & Weight"],["Height (Shipping)","Height_Shipping","Dimensions & Weight"],["Weight (Shipping)","Weight_Shipping","Dimensions & Weight"],["Weight Unit (Buying)","Weight_Unit_Buying","Dimensions & Weight"],["Country of Origin (Primary)","Country_of_Origin","Trade Compliance, Shipping & Hazmat"],["Harmonized Tariff Code (HTS)","Harmonized_Tariff_Code_HTS","Trade Compliance, Shipping & Hazmat"],["Shipping Restrictions","Shipping_Restrictions","Trade Compliance, Shipping & Hazmat"],["Drop Ship Only","Drop_Ship_Only","Trade Compliance, Shipping & Hazmat"],["LTL","LTL","Trade Compliance, Shipping & Hazmat"],["Hazardous Material Code","Hazardous_Material_Code","Trade Compliance, Shipping & Hazmat"],["Hazardous Material Notes","Hazardous_Material_Notes","Trade Compliance, Shipping & Hazmat"],["ORMD Flag","ORMD_Flag","Trade Compliance, Shipping & Hazmat"],["DOT Regulation","DOT_Regulation","Trade Compliance, Shipping & Hazmat"],["UN Number ID","UN_Number_ID_Calc","Trade Compliance, Shipping & Hazmat"],["Lithium","Lithium","Trade Compliance, Shipping & Hazmat"],["Category - French","Category_ French","Canada"],["Warranty Policy - French","Warranty_Policy_French","Canada"],["Canada Harmonized Tariff Code (HTS)","CANADA_Harmonized_Tariff_Code_HTS","Canada"],["Requires Prop 65 Warning","Requires_Prop_65_Warning","Regulatory Warnings (Prop 65 & VOC)"],["Prop 65 Warning Type","Prop_65_Warning_Type","Regulatory Warnings (Prop 65 & VOC)"],["Prop 65 Short Warning","Prop_65_Short_Warning","Regulatory Warnings (Prop 65 & VOC)"],["Prop 65 Specific Warning","Prop_65_Specific_Warning","Regulatory Warnings (Prop 65 & VOC)"],["Warranty Policy","Warranty_Policy","Returns & Warranty"],["Other Warranty","Other_Warranty","Returns & Warranty"],["Is Repairable","Is_Repairable","Returns & Warranty"],["Guaranteed Return","Guaranteed_Return","Returns & Warranty"],["Marketing Date (YYYY-MM-DD)","Marketing_Date_YYYY_MM_DD","Web Launch"],["Available to Ship Date (YYYY-MM-DD)","Available_to_Ship_Date_YYYY_MM_DD","Web Launch"],["Is this Item going on the web?","Syndicate_to_Online_Marketplaces","Web Launch"],["PIM","PIM","Channel Outputs"],["ERP","ERP","Channel Outputs"],["Website","Website","Channel Outputs"],["Amazon","Amazon","Channel Outputs"],["Distributor","Distributor","Channel Outputs"],["Canada","Canada","Channel Outputs"],["Syndication Flags","Syndication_Flags","Channel Outputs"],["Supplier Image URLs","Supplier_Image_URLs","Assets & Documents"],["Supplier Video URLs","Supplier_Video_URLs","Assets & Documents"],["Item URL","Item_URL","Assets & Documents"],["Owners Manual URL","Owners_Manual_URL","Assets & Documents"],["Parts Breakdown URL","Parts_Breakdown_URL","Assets & Documents"],["SDS Sheet URL","SDS_Sheet_URL","Assets & Documents"],["TDS Sheet URL","TDS_Sheet_URL","Assets & Documents"],["Battery Test Summary URL","Battery_Test_Summary_URL","Assets & Documents"],["Onboarding Status","Onboarding_Status","Item MDM & Syndication"],["Last Syndicated","Last_Syndicated","Item MDM & Syndication"],["Last Updated","LastUpdated","Item MDM & Syndication"],["PIM Intro Date","PIM_Intro_Date","Workflow Dates"],["NPI End Date","NPI_End_Date","Workflow Dates"]];
 const KNOWN_GROUPS = ["Item Identifiers","Item Classification","Supplier Details","Product Descriptions","Barcodes & Channel IDs","Supplier Cost & List Pricing","Pricing","Special Pricing & Dates","Purchasing & Case Pack","Inventory & Replenishment","Warehouses","Lifecycle & Supersession","Related Items","Dimensions & Weight","Trade Compliance, Shipping & Hazmat","Canada","Spanish","Regulatory Warnings (Prop 65 & VOC)","Returns & Warranty","Distributor Data","Web Launch","Channel Outputs","Assets & Documents","Item MDM & Syndication","Workflow Dates"];
 /* attrMeta that also answers to mapped names (Admin > Configuration) */
 class AliasMap extends Map {
@@ -1934,7 +1934,7 @@ function derivedDefs() {
   if (taxHasTr()) taxTree.langs.forEach(l => [["Category", "cat"], ["Subcategory", "sub"]].forEach(([lbl, f]) => {
     const attr = `${lbl} - ${LANG_NAME[l]}`; if (seen.has(attr) || !ruleOn("tax:" + attr)) return;
     seen.add(attr);
-    out.push({attr, base: "Product Category_SubCategory Classification Reference", lang: l, kind: "tax", group: attrMeta && attrMeta.get(attr) ? attrMeta.get(attr).group : langGroup(l),
+    out.push({attr, base: "Category Classification ID", lang: l, kind: "tax", group: attrMeta && attrMeta.get(attr) ? attrMeta.get(attr).group : langGroup(l),
       from: "the category tree",
       compute: (item, idx) => { const n = (itemTax() || [])[idx]; if (!n) return {value: "", base: ""}; const o = f === "cat" ? n.cat : n;
         if (f === "sub" && !n.id && !n.name) return {value: "", base: ""};
@@ -3170,7 +3170,7 @@ $("#pasteCancel").addEventListener("click", () => $("#modal").classList.remove("
 $("#pasteGo").addEventListener("click", () => {
   if (!lookupAll) {
     lookupAll = new Map();
-    ["Item Number", "Supplier Part Number", "ERPItemNo", ID].forEach(c => {
+    ["Item Number", "Supplier Part Number", "ERP Item Number", ID].forEach(c => {
       const k = master.head.indexOf(c); if (k < 0) return;
       master.rows.forEach((r, i) => { const v = (r[k] || "").trim().toLowerCase(); if (v && !lookupAll.has(v)) lookupAll.set(v, i); });
     });
@@ -3227,7 +3227,7 @@ async function loadItems(idxs, onProgress) {
   }
   return out;
 }
-const itemLabel = it => it.item[PN] || it.item["ERPItemNo"] || it.id;
+const itemLabel = it => it.item[PN] || it.item["ERP Item Number"] || it.id;
 
 /* ---------- item drawer ---------- */
 function closeDrawer() { $("#drawer").classList.remove("open"); }
@@ -3591,7 +3591,7 @@ const TPL = [
   ["Descriptive Paragraph", "Supplier Descriptive Paragraph", 1], ["Included Components", "Included Components", 0], ["Disclaimer", "Disclaimer", 0],
   ["Web Key Search Words", "Web Search Keywords", 0], ["Has UPC", "Has UPC", 1], ["UPC", "UPC (GTIN)", 0, "gtin"],
   ["Country of Origin", "Country of Origin (Primary)", 1], ["Harmonized Tariff Code (HTS)", "Harmonized Tariff Code (HTS)", 1, "hts"],
-  ["Canada Harmonized Tariff Code (HTS)", "CANADA Harmonized Tariff Code (HTS)", 0, "hts"], ["Unit Cost Each", "Unit Cost", 1, "num"],
+  ["Canada Harmonized Tariff Code (HTS)", "Canada Harmonized Tariff Code (HTS)", 0, "hts"], ["Unit Cost Each", "Unit Cost", 1, "num"],
   ["Manufacturer Distributor Price Each", "Distributor Pricing", 0, "num"], ["Manufacturer Wholesale Price Each", "Wholesale Pricing", 0, "num"],
   ["Manufacturer List Price Each", "List Pricing", 0, "num"], ["MAPP Minimum Advertised Price Each", "MAPP Pricing", 0, "num"],
   ["MOQ Minimum Order Quantity", "Minimum Order Qty", 1, "num"], ["Pack Size", "Pack Size", 1, "num"], ["Package Type", "Package Type", 1],
@@ -4754,7 +4754,7 @@ function catTokens(t) {
   const out = new Set(w); for (let i = 0; i < w.length - 1; i++) out.add(w[i] + "_" + w[i + 1]); return [...out];
 }
 let catModel = null, catModelBusy = null;
-const catTitleAttr = () => ["Product Title", "Long ERP Description", "Product Web Title_Calc"].find(a => resolveCol(a));
+const catTitleAttr = () => ["Product Title", "Long ERP Description", "Product Web Title"].find(a => resolveCol(a));
 function catModelReady() { return catModel && catModel.m === master && catModel.t === taxTree ? catModel : null; }
 async function catModelBuild() {
   if (catModelReady()) return catModel;
@@ -5674,7 +5674,7 @@ function buyItemVals(r) {
 function taxFill(it, n) {
   if (!n) return it;
   if (!String(it[CLASS_REF] || "").trim()) it[CLASS_REF] = n.id;
-  if (!String(it["PIM_Cat_Subcat_concat"] || "").includes("/")) it["PIM_Cat_Subcat_concat"] = `${n.cat.name}/${n.name}`;
+  if (!String(it["Category and Subcategory"] || "").includes("/")) it["Category and Subcategory"] = `${n.cat.name}/${n.name}`;
   (taxTree.langs || []).forEach(l => { if (l === "en") return;
     if (tHas(n.cat, l)) it[`Category - ${LANG_NAME[l]}`] = it[`Category - ${LANG_NAME[l]}`] || n.cat.tr[l];
     if (tHas(n, l)) it[`Subcategory - ${LANG_NAME[l]}`] = it[`Subcategory - ${LANG_NAME[l]}`] || n.tr[l]; });
@@ -5687,7 +5687,7 @@ function newRowItem(x) {
   Object.keys(v).forEach(k => { if (k.startsWith("a:") && v[k] !== undefined && v[k] !== "") it[k.slice(2)] = v[k]; });
   if (taxTree && v["t:Subcategory"]) { const m = matchTax(v["t:Subcategory"]); taxFill(it, m && m.sub); }
   if (!it["Supplier ID"] && v["t:Supplier Name"]) { const vd = (vendors || []).find(z => norm(z.name) === norm(v["t:Supplier Name"])); if (vd) it["Supplier ID"] = vd.num; }
-  if (!it["ERPItemNo"] && it[PN]) it["ERPItemNo"] = it[PN];
+  if (!it["ERP Item Number"] && it[PN]) it["ERP Item Number"] = it[PN];
   return it;
 }
 const sheetOf = aoa => XLSX.utils.aoa_to_sheet(aoa);
@@ -5709,7 +5709,7 @@ async function exportReq(r) {
   let mpRows = 0, stepRows = 0, note = "";
   if (isQs(r)) {
     const Q = r.qs, R = Q.req, base0 = {...Q.values, ...(buyItemVals(r).get("1") || {})};
-    if (!base0[PN]) base0[PN] = R.item || base0["ERPItemNo"] || "";
+    if (!base0[PN]) base0[PN] = R.item || base0["ERP Item Number"] || "";
     if (taxTree && R.category) { const c = taxIndex.catIdx.get(norm(R.category)), n = c && R.sub !== undefined && R.sub !== "" ? c.subs.find(x => String(x.ix) === String(R.sub)) : null; taxFill(base0, n); }
     const item = withDerived(base0);
     XLSX.utils.book_append_sheet(mp, mpFullSheet([item]), "ERP"); mpRows = 1;
@@ -6700,19 +6700,19 @@ function qsSeed(m) {
   const R = (v, needs = false, blank = false) => ({v, needs, blank});
   if (m.retired) return R(yn ? "No" : "", false, true);
   const exact = {
-    "Supplier Part Number": R("{supplierpart}"), "Item Number": R("{item}"), "Supplier Name": R("{supplier}"), "ERPItemNo": R("{item}"), "PIM_Cat_Subcat_concat": R("{catsub}", true), "Buyer ID": R("{buyer}"),
-    "Inventory Category (Prefix)": R("{prefix}"), "Inventory Group": R("General Inventory (GEN)"), "Reorder": R("Yes"), "Has UPC": R("No"), "Product Title": R("{desc}"), "Product Line": R("GEN"), "Price Group": R("{pricegroup}"), "Product Category_SubCategory Classification Reference": R("{subid}", true),
-    "Supplier ID": R("{sid}"), "Vendor Category": R("", false, true), "Product Web Title_Calc": R("{calc}"), "Long ERP Description": R("{DESC37}"),
+    "Supplier Part Number": R("{supplierpart}"), "Item Number": R("{item}"), "Supplier Name": R("{supplier}"), "ERP Item Number": R("{item}"), "Category and Subcategory": R("{catsub}", true), "Buyer ID": R("{buyer}"),
+    "Inventory Category (Prefix)": R("{prefix}"), "Inventory Group": R("General Inventory (GEN)"), "Reorder": R("Yes"), "Has UPC": R("No"), "Product Title": R("{desc}"), "Product Line": R("GEN"), "Price Group": R("{pricegroup}"), "Category Classification ID": R("{subid}", true),
+    "Supplier ID": R("{sid}"), "Vendor Category": R("", false, true), "Product Web Title": R("{calc}"), "Long ERP Description": R("{DESC37}"),
     "Short ERP Description": R("{DESC15}"), "Marketing Brand Name": R("{brand}"), "Product Descriptive Paragraph (Web)": R("{calc}", true),
     "Web Search Keywords": R("{desc}", true), "UPC (GTIN)": R("", false, true), "Unit Cost": R("{cost}"), "Minimum Order Qty": R("1"),
     "Estimated Lead Time": R("10"), "Forecast Profile": R("", true, true), "Warehouse Inventory": R("", false, true), "Warehouse Inventory Qty": R("", false, true),
     "Weight Unit (Buying)": R("LB"), "Country of Origin (Primary)": R("United States (US)", true), "Harmonized Tariff Code (HTS)": R("0000.00.0000", true),
-    "CANADA Harmonized Tariff Code (HTS)": R("0000.00.0000", true), "Hazardous Material Notes": R("", false, true), "UN Number ID_Calc": R("", false, true),
+    "Canada Harmonized Tariff Code (HTS)": R("0000.00.0000", true), "Hazardous Material Notes": R("", false, true), "UN Number ID": R("", false, true),
     "Prop 65 Warning Type": R("None", true), "Prop 65 Short Warning": R("None", true), "Prop 65 Specific Warning": R("", false, true),
     "Warranty Policy": R("Call vendor for warranty", true), "Guaranteed Return": R("No", true), "Marketing Date (YYYY-MM-DD)": R("{today}"),
     "Available to Ship Date (YYYY-MM-DD)": R("{today}"), "Syndication Flags": R("", false, true), "All Product Images Path": R("", true, true),
-    "Onboarding Status": R("Quick Sale - Offline"), "LastUpdated": R("{today}"), "NPI End Date": R("{today}"),
-    "Hazardous Material Code": R("No", true), "Lithium": R("No", true), "Requires Prop 65 Warning": R("No", true), "ORMD_Flag": R("No", true),
+    "Onboarding Status": R("Quick Sale - Offline"), "Last Updated": R("{today}"), "NPI End Date": R("{today}"),
+    "Hazardous Material Code": R("No", true), "Lithium": R("No", true), "Requires Prop 65 Warning": R("No", true), "ORMD Flag": R("No", true),
   };
   if (exact[n]) return exact[n];
   if (/ - (French|Spanish)$/.test(n)) return R(/Warranty Policy/.test(n) ? "{translated}" : "{desc}", true);
@@ -6730,7 +6730,7 @@ function qsFields(mode) {
   const IN_GROUP = ["Has UPC", ...(mode === "single" ? TPL.map(f => f.attr).filter(a => attrMeta.get(a) && !attrMeta.get(a).retired) : [])];   /* not ERP fields, but shown in their own group */
   const mp = [...attrMeta.values()].filter(m => (m.mp || IN_GROUP.includes(m.name)) && !offSet.has(m.name)).sort((a, b) => gi(a.group) - gi(b.group) || a.sort - b.sort).map(m => ({m, mp: !!m.mp, sec: m.group}));
   const inMp = new Set(mp.map(x => x.m.name));
-  const other = ["Product Category_SubCategory Classification Reference", "Product Title", "Category Manager", "Buyer Name"].map(n => attrMeta.get(n)).filter(m => m && !m.mp && !offSet.has(m.name) && !inMp.has(m.name)).map(m => ({m, mp: false, sec: "Not sent to ERP"}));
+  const other = ["Category Classification ID", "Product Title", "Category Manager", "Buyer Name"].map(n => attrMeta.get(n)).filter(m => m && !m.mp && !offSet.has(m.name) && !inMp.has(m.name)).map(m => ({m, mp: false, sec: "Not sent to ERP"}));
   return [...ctl, ...mp.filter(x => !(mode === "single" && x.m.retired)), ...other];
 }
 const qsDefault = m => {
@@ -6784,7 +6784,7 @@ function qsBuild(req, mode) {
     const usesItem = /\{(prefix|supplierpart|pricegroup)\}/.test(v), usesReq = /\{(item|desc|DESC37|DESC15|cost|sid|category|catsub|subid)\}/.test(v), usesVend = /\{(buyer|supplier|brand)\}/.test(v) || (v === "{mgr}" && !req.mgr);
     v = v.replace(/\{(\w+)\}/g, (_, k) => k === "translated" || k === "calc" ? `{${k}}` : (tok[k] ?? ""));
     values[m.name] = v; src[m.name] = usesItem && v ? "Item number" : usesReq ? "Request" : usesVend ? "Vendor alignment" : "Default";
-    if (mode !== "single" && ((d.needs && !(sub && ["PIM_Cat_Subcat_concat", "Product Category_SubCategory Classification Reference"].includes(m.name))) || (m.name === "Marketing Brand Name" && brands.length > 1) || (m.name === "Inventory Category (Prefix)" && !prefix))) needs.push(m.name);
+    if (mode !== "single" && ((d.needs && !(sub && ["Category and Subcategory", "Category Classification ID"].includes(m.name))) || (m.name === "Marketing Brand Name" && brands.length > 1) || (m.name === "Inventory Category (Prefix)" && !prefix))) needs.push(m.name);
   });
   /* what this supplier's existing items use */
   const learned = req.sid && qsLearnCache.get(sidOf(req.sid));
@@ -6819,8 +6819,8 @@ function qsCheck(q) {
   if (!q.values["Inventory Category (Prefix)"] && q.sp && q.sp.code && !q.sp.known) errs["Inventory Category (Prefix)"] = `Prefix "${q.sp.code}" (first 3 characters of the item number) is not in the prefix list`;
   else if (q.sp && q.sp.known && q.values["Inventory Category (Prefix)"] && lovKey(lovFor("Inventory Category (Prefix)") || {keyOf: new Map()}, q.values["Inventory Category (Prefix)"]) !== q.sp.lovVal)
     warns["Inventory Category (Prefix)"] = `Item number starts with ${q.sp.code}`;
-  if (!q.req.item) errs["ERPItemNo"] = "Item number is required";
-  else if (!/^[A-Za-z0-9-]+$/.test(q.req.item)) errs["ERPItemNo"] = "Item number: letters, numbers and dashes only";
+  if (!q.req.item) errs["ERP Item Number"] = "Item number is required";
+  else if (!/^[A-Za-z0-9-]+$/.test(q.req.item)) errs["ERP Item Number"] = "Item number: letters, numbers and dashes only";
   return {errs, warns};
 }
 
@@ -7178,7 +7178,7 @@ function renderItemView() {
   const crumbs = n ? [n.cat.name, n.name].filter(Boolean) : [];
   p.innerHTML = `<div class="stHead"><div class="stCrumb">${crumbs.length ? crumbs.map(esc).join(" &rsaquo; ") : "Unclassified"}</div>
       <h2>${esc(item[PN] || selItem.id)}</h2>
-      <div class="stMeta">${esc(item["Product Web Title_Calc"] || item["Product Title"] || "")}</div>
+      <div class="stMeta">${esc(item["Product Web Title"] || item["Product Title"] || "")}</div>
       <div class="stMeta">ID ${esc(selItem.id)}${item["Supplier ID"] ? ` &middot; ${esc(item["Supplier ID"])} ${esc(vendName(item["Supplier ID"]) || item["Supplier"] || "")}` : ""}
         ${pendN ? ` &middot; <span class="stPend">${pendN} pending change${pendN === 1 ? "" : "s"}</span>` : ""}
         ${can("edit") ? ` &middot; <a class="lk" style="padding:0" data-cfgitem title="CFG_Discontinue, CFG_Reactivate...">Run configuration</a>` : ""}
@@ -7310,8 +7310,9 @@ $("#pageTitle").textContent = PAGE_TITLES[section] || "";
    place. Calculated fields are editable templates; the others can be
    switched on or off. Stored in the workspace (ws.settings.rules).
    ====================================================================== */
+const RENAMED_FIELDS = {"Product Category_SubCategory Classification Reference": "Category Classification ID", "Features_And_Benefits_Calc (no longer in use)": "Features and Benefits Summary (no longer in use)", "Product Web Title_Calc": "Product Web Title", "PIM_Cat_Subcat_concat": "Category and Subcategory", "UN Number Description_Calc": "UN Number Description", "UN Number ID_Calc": "UN Number ID", "ERPItemNo": "ERP Item Number", "ORMD_Flag": "ORMD Flag", "LastUpdated": "Last Updated", "ITEM TYPE": "Item Type", "NEW RETURN": "New Return", "BROKEN BUT SALEABLE RETURN": "Broken but Saleable Return", "BROKEN/DEFECTIVE RETURN": "Broken/Defective Return", "CANADA Harmonized Tariff Code (HTS)": "Canada Harmonized Tariff Code (HTS)"};
 const DEFAULT_CALC = () => [
-  {id: "webtitle", attr: "Product Web Title_Calc", type: "template", template: "{Marketing Brand Name} {Product Title}", dedupe: true, builtin: true},
+  {id: "webtitle", attr: "Product Web Title", type: "template", template: "{Marketing Brand Name} {Product Title}", dedupe: true, builtin: true},
   {id: "webpara", attr: "Product Descriptive Paragraph (Web)", type: "htmllist", listAttr: "Product Features and Benefits (Web)", paraAttr: "Supplier Descriptive Paragraph", heading: "Features and Benefits:", builtin: true},
   /* ERP syndication_flag_delimited: every output flagged Yes, e.g. "PIM;ERP;Website;Amazon" */
   {id: "syndication", attr: "Syndication Flags", type: "yeslist", group: "Channel Outputs", sep: ";", builtin: true},
@@ -7330,6 +7331,7 @@ function rulesCfg() {
   ws.settings.rules = ws.settings.rules || {};
   const R = ws.settings.rules;
   if (!R.calc) R.calc = DEFAULT_CALC();
+  R.calc.forEach(x => { if (RENAMED_FIELDS[x.attr]) x.attr = RENAMED_FIELDS[x.attr]; });
   DEFAULT_CALC().forEach(d => { if (!R.calc.some(x => x.id === d.id)) R.calc.push(d); });   /* built-in rules added later */
   R.off = R.off || {}; if (!R.prefixLen) R.prefixLen = 3; if (R.pgSuffix === undefined) R.pgSuffix = "01";
   return R;
@@ -7545,7 +7547,7 @@ $("#exportsBody").addEventListener("click", async e => {
    Lookup tables (things only SQL has) are uploaded once and kept in this
    browser (IndexedDB key "nod_ref").
    ====================================================================== */
-const DIST_PN = "Item Number || ERPItemNo";
+const DIST_PN = "Item Number || ERP Item Number";
 const DIST_FMT = {"": "As is", yn: "Y / N", money: "0.00", code: "LOV code", int: "Whole number"};
 const DIST_DEFAULT = () => [
   ["<ID>", "SM.pim_id", "attr", "<ID>"],
@@ -7572,7 +7574,7 @@ const DIST_DEFAULT = () => [
   ["Subject to California Prop 65 (Y/N)", "sm.prop_65_required_flag Yes/No to Y/N", "attr", "Requires Prop 65 Warning", "yn"],
   ["California Prop 65 Warning Type (USE DROP DOWN; LEAVE BLANK IF NO WARNING)", "'WARNING: Cancer and Reproductive Harm - www.P65Warnings.ca.gov' when Prop 65 = Yes", "calc", "p65type"],
   ...[1, 2, 3, 4, 5].map(n => [`Prop 65 Chemical Name ${n}`, "blank", "blank"]),
-  ["UN Number", "im.un_number", "attr", "UN Number ID_Calc"],
+  ["UN Number", "im.un_number", "attr", "UN Number ID"],
   ["UN Proper Shipping Name", "UN3481 = Lithium ion batteries contained, UN3480 = Lithium ion batteries", "calc", "unname"],
   ["Transport Hazard Class", "blank", "blank"], ["Packing Group", "blank", "blank"],
   ["Is this Limited Quantity?", "'Y' when im.ormd_flag = 'Y', otherwise empty", "calc", "ltdqty"],
@@ -7592,11 +7594,11 @@ const DIST_DEFAULT = () => [
   ["Serialized Item (Y/N)", "im.serialized_item", "attr", "@itemmaster.serialized_item"],
   ["Warranty", "SM.warranty_description", "attr", "Warranty Policy"],
   ["LTL Only (Y/N)", "im.ltl_only_flag", "attr", "LTL || @itemmaster.ltl_only_flag", "yn"],
-  ["Item Type", "im.item_type", "attr", "ITEM TYPE || @itemmaster.item_type", "code"],
+  ["Item Type", "im.item_type", "attr", "Item Type || @itemmaster.item_type", "code"],
   ["Global Pack Size", "im.global_pack_size", "attr", "@itemmaster.global_pack_size || Pack Size"],
   ["Always Charge Freight (Y/N)", "im.always_charge_freight", "attr", "@itemmaster.always_charge_freight"],
-  ["New Returns (Y/N)", "im.new_returns", "attr", "NEW RETURN || @itemmaster.new_returns", "yn"],
-  ["Defective Returns (Y/N)", "im.defective_returns", "attr", "BROKEN/DEFECTIVE RETURN || @itemmaster.defective_returns", "yn"],
+  ["New Returns (Y/N)", "im.new_returns", "attr", "New Return || @itemmaster.new_returns", "yn"],
+  ["Defective Returns (Y/N)", "im.defective_returns", "attr", "Broken/Defective Return || @itemmaster.defective_returns", "yn"],
   ["Discountable (Y/N)", "im.discountable_flag", "attr", "@itemmaster.discountable_flag"],
   ["Marketing Brand Name", "sm.brand_name", "attr", "Marketing Brand Name"],
   ["Category", "SM.categories, text before the first '/'", "calc", "cat"],
@@ -7624,7 +7626,7 @@ const DIST_DEFAULT = () => [
 const DIST_FILTERS = [
   {id: "reorder", label: "Reorder is Yes", sql: "im.reorder_flag = 'Y'", src: "Reorder || @itemmaster.reorder_flag", keep: v => nodYN(v) === "Y"},
   {id: "obsolete", label: "Obsolete is No", sql: "im.obsolete_flag = 'N'", src: "Obsolete || @itemmaster.obsolete_flag", keep: v => nodYN(v) === "N"},
-  {id: "kit", label: "Item type is not K (kit)", sql: "im.item_type != 'K'", src: "ITEM TYPE || @itemmaster.item_type", keep: v => lovCodeOf(v).toUpperCase() !== "K"},
+  {id: "kit", label: "Item type is not K (kit)", sql: "im.item_type != 'K'", src: "Item Type || @itemmaster.item_type", keep: v => lovCodeOf(v).toUpperCase() !== "K"},
   {id: "vendor", label: "Supplier is not excluded", sql: "vendor_number NOT IN ('SUP999')", src: "Supplier ID", keep: (v, S) => !S.exclVendors.split(/[\s,;]+/).filter(Boolean).map(sidOf).includes(sidOf(v))},
   {id: "onnod", label: "Not already at the distributor", sql: "DistPart NOT IN dist_part_xref.PLPart", calc: true},
   {id: "nodflag", label: "Distributor channel flag is Yes", sql: "(not in the SQL) uses the Distributor output flag", src: "Distributor", keep: v => nodYN(v) === "Y", optional: true},
@@ -7680,7 +7682,7 @@ function nodToken(it, t) {
 }
 function nodVal(it, src) { for (const t of String(src || "").split("||")) { const v = nodToken(it, t); if (v) return v; } return ""; }
 const nodTokens = src => String(src || "").split("||").map(s => s.trim()).filter(Boolean);
-function nodSplitCat(it) { const v = nodVal(it, "PIM_Cat_Subcat_concat"); const p = v.split("/").map(s => s.trim()); return v.includes("/") ? [p[0], p[p.length - 1]] : ["", ""]; }
+function nodSplitCat(it) { const v = nodVal(it, "Category and Subcategory"); const p = v.split("/").map(s => s.trim()); return v.includes("/") ? [p[0], p[p.length - 1]] : ["", ""]; }
 function nodCatSub(it) {
   if (it.idx !== undefined && typeof taxField === "function") { const c = taxField(it.idx, "cat", "en"), s = taxField(it.idx, "sub", "en"); if (c || s) return [c, s]; }
   return nodSplitCat(it);
@@ -7700,23 +7702,23 @@ function nodPart(it) {
 const DIST_CALC = {
   nodpart: {desc: "Item Number with its first 3 characters replaced by ProductLine_ID (xref, then abbreviations, else kept), then '.' after character 3", run: it => nodPart(it)},
   sku: {desc: "Supplier Part Number when the prefix's IsCommon = 1 in the xref, otherwise Item Number", run: it => { const pn = nodVal(it, DIST_PN); return nodPrefixMap(pn.slice(0, 3).toUpperCase()).common ? nodVal(it, "Supplier Part Number") : pn; }},
-  longdesc: {desc: "Product Web Title_Calc with the Marketing Brand Name taken out", run: it => { const t = nodVal(it, "Product Web Title_Calc"), b = nodVal(it, "Marketing Brand Name");
+  longdesc: {desc: "Product Web Title with the Marketing Brand Name taken out", run: it => { const t = nodVal(it, "Product Web Title"), b = nodVal(it, "Marketing Brand Name");
     return (b ? t.split(new RegExp(b.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")).join("") : t).replace(/\s{2,}/g, " ").trim(); }},
-  bullets: {desc: "Product Features and Benefits (Web); if blank or n/a, Supplier Descriptive Paragraph; if blank, Product Web Title_Calc. ';' becomes ' | '", run: it => {
+  bullets: {desc: "Product Features and Benefits (Web); if blank or n/a, Supplier Descriptive Paragraph; if blank, Product Web Title. ';' becomes ' | '", run: it => {
     const ok = v => v && v.trim().toLowerCase() !== "n/a";
     let f = nodVal(it, "Product Features and Benefits (Web)"); if (/<li/i.test(f)) f = splitFeatures(f).join(";");
-    const v = ok(f) ? f : ok(nodVal(it, "Supplier Descriptive Paragraph")) ? nodVal(it, "Supplier Descriptive Paragraph") : nodVal(it, "Product Web Title_Calc");
+    const v = ok(f) ? f : ok(nodVal(it, "Supplier Descriptive Paragraph")) ? nodVal(it, "Supplier Descriptive Paragraph") : nodVal(it, "Product Web Title");
     return v.replace(/;/g, " | "); }},
   gtin: {desc: "UPC (GTIN) left-padded with zeros to 14 digits", run: it => { const u = nodVal(it, "UPC (GTIN)").replace(/\s/g, ""); return u ? ("00000000000000" + u).slice(-14) : ""; }},
   coo: {desc: "2-letter code of Country of Origin (Primary), from the LOV code, or the country_codes table for 3-letter values", run: it => { const v = nodVal(it, "Country of Origin (Primary)"), c = lovCodeOf(v); return nodRef.coo[c.toUpperCase()] || c; }},
   liquid: {desc: "Y when the subcategory is in the liquid list (set below), else N", run: it => { const L = nodCfg().liquid.split(/;/).map(s => norm(s)).filter(Boolean); return L.includes(norm(nodCatSub(it)[1])) ? "Y" : "N"; }},
   p65type: {desc: "'WARNING: Cancer and Reproductive Harm - www.P65Warnings.ca.gov' when Requires Prop 65 Warning = Yes", run: it => nodYN(nodVal(it, "Requires Prop 65 Warning")) === "Y" ? "WARNING: Cancer and Reproductive Harm - www.P65Warnings.ca.gov" : ""},
-  unname: {desc: "UN3481 = Lithium ion batteries contained, UN3480 = Lithium ion batteries", run: it => ({UN3481: "Lithium ion batteries contained", UN3480: "Lithium ion batteries"})[lovCodeOf(nodVal(it, "UN Number ID_Calc")).toUpperCase().replace(/\s/g, "")] || ""},
-  ltdqty: {desc: "Y when ORMD_Flag = Y, otherwise empty", run: it => nodYN(nodVal(it, "ORMD_Flag")) === "Y" ? "Y" : ""},
+  unname: {desc: "UN3481 = Lithium ion batteries contained, UN3480 = Lithium ion batteries", run: it => ({UN3481: "Lithium ion batteries contained", UN3480: "Lithium ion batteries"})[lovCodeOf(nodVal(it, "UN Number ID")).toUpperCase().replace(/\s/g, "")] || ""},
+  ltdqty: {desc: "Y when ORMD Flag = Y, otherwise empty", run: it => nodYN(nodVal(it, "ORMD Flag")) === "Y" ? "Y" : ""},
   mapflag: {desc: "Y when MAPP Pricing is above 0, otherwise N", run: it => (nodNum(nodVal(it, "MAPP Pricing || @pricing.MAPP")) || 0) > 0 ? "Y" : "N"},
   mapval: {desc: "MAPP Pricing as 0.00, empty when 0", run: it => { const n = nodNum(nodVal(it, "MAPP Pricing || @pricing.MAPP")); return n ? n.toFixed(2) : ""; }},
-  cat: {desc: "Category from the category tree (or PIM_Cat_Subcat_concat before the first '/')", run: it => nodCatSub(it)[0]},
-  sub: {desc: "Subcategory from the category tree (or PIM_Cat_Subcat_concat after the last '/')", run: it => nodCatSub(it)[1]},
+  cat: {desc: "Category from the category tree (or Category and Subcategory before the first '/')", run: it => nodCatSub(it)[0]},
+  sub: {desc: "Subcategory from the category tree (or Category and Subcategory after the last '/')", run: it => nodCatSub(it)[1]},
   rzip: {desc: "'From - To' zip range from the restricted items table", run: it => { const T = nodRef.tables.restricted; if (!T) return "";
     const f = T.cols.findIndex(c => norm(c) === norm("RestrictedbyFromZipCode")), t = T.cols.findIndex(c => norm(c) === norm("RestrictedbyToZipCode"));
     return [...new Set(nodRefRows("restricted", it).filter(r => String(r[f] || "").trim() && String(r[t] || "").trim()).map(r => `${String(r[f]).trim()} - ${String(r[t]).trim()}`))].join("; "); }},
@@ -8158,7 +8160,7 @@ wsInit();
    ====================================================================== */
 window.FAM_ON = true;
 const FAM_KINDS = ["Sizes", "Colors", "Sizes and colors", "Set / kit", "Other"];
-const FAM_ID_ATTRS = [ID, PN, "Supplier Part Number", "UPC (GTIN)", "ERPItemNo", "Product Web Title_Calc"];
+const FAM_ID_ATTRS = [ID, PN, "Supplier Part Number", "UPC (GTIN)", "ERP Item Number", "Product Web Title"];
 const FAM_SIZE_WORDS = new Set("xxs xs s m l xl xxl xxxl 2xl 3xl 4xl 5xl 6xl small sm medium med md large lg x-large xx-large xxx-large xlarge xxlarge extra petite tall regular short long wide narrow youth toddler infant size sz".split(" "));
 const FAM_UNIT_WORDS = new Set("mm cm m in inch inches ft feet foot yd oz lb lbs gal gallon qt quart pt pint ml l ltr liter v volt volts amp amps ah w watt watts pc pcs piece pieces pk pack ct count gauge ga awg no".split(" "));
 const FAM_COLOR_WORDS = new Set("black white red blue green yellow orange purple pink brown gray grey silver gold chrome tan beige navy khaki olive camo camouflage maroon burgundy teal charcoal hi-vis".split(" "));
@@ -8413,7 +8415,7 @@ function renderGroup(f) {
   const q = norm(fm.q2 || ""), show = fm.show || "values";
   const vis = rows.filter(r => (!q || norm(r.a).includes(q)) && (show === "all" || (show === "values" ? r.st !== "empty" : r.st === show)));
   const cnt = k => rows.filter(r => r.st === k).length;
-  const varyCols = (f.vary || []).filter(a => ![ID, PN, "Product Title", "Product Web Title_Calc"].includes(a)).slice(0, 4);
+  const varyCols = (f.vary || []).filter(a => ![ID, PN, "Product Title", "Product Web Title"].includes(a)).slice(0, 4);
   const missing = f.ids.filter(id => !idMap.has(id));
   const editRow = fm.edit && rows.find(r => r.a === fm.edit);
   let h = `<a class="lk" style="padding:0" data-famback>&larr; ${esc(f.sid ? f.sid + " " + (vendName(f.sid) || "") : "All item groups")}</a>
@@ -8559,7 +8561,7 @@ $("#famSelBtn").addEventListener("click", () => { fm.sel = null; fm.sug = false;
                   link, note, urgent, req?, declined?, fixed?, doneBy?, doneAt?}]
    ====================================================================== */
 const UR_STATUS = {new: ["Submitted", "var(--brand)"], working: ["Being updated", "var(--warn)"], approval: ["Waiting for approval", "#7c3aed"], updated: ["Updated", "var(--ok)"], fixed: ["Fixed", "var(--ok)"], declined: ["Declined", "var(--danger)"]};
-const UR_COMMON = ["Product Title", "Product Web Title_Calc", "Product Features and Benefits (Web)", "Supplier Descriptive Paragraph", "Marketing Brand Name", "UPC (GTIN)",
+const UR_COMMON = ["Product Title", "Product Web Title", "Product Features and Benefits (Web)", "Supplier Descriptive Paragraph", "Marketing Brand Name", "UPC (GTIN)",
   "Primary Product Image DAM Link", "Length (Product)", "Width (Product)", "Height (Product)", "Weight (Product)", "Country of Origin (Primary)", "Warranty Policy", "Included Components", "Website Link"];
 const urs = () => (ws.updReqs = ws.updReqs || []);
 const canFixUr = () => can("edit") || can("itemload");
@@ -8574,7 +8576,7 @@ function urState(x) {
 }
 const urWhy = x => x.declined || x.fixed || (() => { const r = x.req && reqById(x.req); if (!r || !["rejected", "withdrawn"].includes(r.status)) return ""; const h = r.history.filter(h => h.note).pop(); return h ? h.note : ""; })();
 const urPill = k => `<span class="stpill" style="background:color-mix(in srgb, ${UR_STATUS[k][1]} 15%, transparent);color:${UR_STATUS[k][1]}">${UR_STATUS[k][0]}</span>`;
-const urLabel = a => a === "Product Web Title_Calc" ? "Web title" : a === CLASS_REF ? "Category / subcategory" : a;
+const urLabel = a => a === "Product Web Title" ? "Web title" : a === CLASS_REF ? "Category / subcategory" : a;
 
 /* ---------- shared: filters for a request list (requested by / status / search) ---------- */
 function reqFilterBar(id, F, people, states) {
@@ -8632,7 +8634,7 @@ function renderUpdReq() {
          <div class="qsForm"><label class="qsF"><span>Item Number *</span><input class="in" data-urm="manualPn" value="${esc(d.manualPn)}"></label><label class="qsF"><span>Item description</span><input class="in" data-urm="manualTitle" value="${esc(d.manualTitle)}"></label></div>`;
   } else {
     const I = it.item;
-    h += `<div class="urItem"><div><b>${esc(I[PN] || it.id)}</b> &middot; ${esc(I["Product Web Title_Calc"] || I["Product Title"] || "")}<div class="muted" style="font-size:12px">${esc(I["Supplier ID"] || "")} ${esc(vendName(I["Supplier ID"]) || "")} &middot; ${esc(I["Marketing Brand Name"] || "")} &middot; ${esc(I["PIM_Cat_Subcat_concat"] || "")}</div></div>
+    h += `<div class="urItem"><div><b>${esc(I[PN] || it.id)}</b> &middot; ${esc(I["Product Web Title"] || I["Product Title"] || "")}<div class="muted" style="font-size:12px">${esc(I["Supplier ID"] || "")} ${esc(vendName(I["Supplier ID"]) || "")} &middot; ${esc(I["Marketing Brand Name"] || "")} &middot; ${esc(I["Category and Subcategory"] || "")}</div></div>
       <button class="lk" id="urChange">Pick a different item</button></div>`;
   }
   if (it || !master) {
@@ -8641,7 +8643,7 @@ function renderUpdReq() {
         const want = L && L.values.length <= 600 ? `<select class="in" data-urw="${k}"><option value="">Choose...</option>${L.values.map(v => `<option ${norm(v) === norm(f.want) ? "selected" : ""}>${esc(v)}</option>`).join("")}</select>`
           : `<input class="in" data-urw="${k}" value="${esc(f.want)}" placeholder="${f.attr ? "Correct value" : "Describe it"}">`;
         return `<tr><td><input class="in" data-ura="${k}" list="urAttrs" value="${esc(f.attr ? urLabel(f.attr) : "")}" placeholder="Pick or type a field"></td>
-          <td class="${cur ? "" : "muted"}" style="font-size:12.5px">${f.attr ? (it ? (cur ? esc(unhtml(cur).slice(0, 160)) : "(empty)") : "") : ""}${f.attr === "Product Web Title_Calc" ? '<div class="muted" style="font-size:11px">Built from brand + product title</div>' : ""}</td>
+          <td class="${cur ? "" : "muted"}" style="font-size:12.5px">${f.attr ? (it ? (cur ? esc(unhtml(cur).slice(0, 160)) : "(empty)") : "") : ""}${f.attr === "Product Web Title" ? '<div class="muted" style="font-size:11px">Built from brand + product title</div>' : ""}</td>
           <td>${want}</td><td>${d.fields.length > 1 ? `<button class="lk" data-urrm="${k}" title="Remove">&times;</button>` : ""}</td></tr>`; }).join("")}</table></div>
       <datalist id="urAttrs">${[...UR_COMMON.filter(a => !attrMeta || attrMeta.get(a)), ...attrs.filter(a => !UR_COMMON.includes(a))].map(a => `<option value="${esc(urLabel(a))}">`).join("")}<option value="Other (describe in notes)"></datalist>
       <div class="tx-tools" style="margin:8px 0"><button class="lk" id="urAdd">+ Another field</button><span class="muted">Common: ${UR_COMMON.slice(0, 6).map(a => `<a class="lk" style="padding:0" data-urquick="${esc(a)}">${esc(urLabel(a))}</a>`).join(", ")}</span></div>
@@ -8667,7 +8669,7 @@ function renderUpdReq() {
 }
 const urOk = d => !!((d.item || d.manualPn.trim()) && (d.fields.some(f => f.attr && ((f.want || "").trim() || /^Other/.test(f.attr))) || d.note.trim()));
 const urFieldsHtml = x => x.fields.map(f => `<div style="font-size:12.5px"><b>${esc(urLabel(f.attr))}</b>${f.want ? ` &rarr; ${esc(f.want.slice(0, 120))}` : ""}${f.cur ? `<span class="muted"> (was ${esc(unhtml(f.cur).slice(0, 60))})</span>` : ""}</div>`).join("");
-const urAttrOf = label => { if (!label) return ""; if (/^web title$/i.test(label)) return "Product Web Title_Calc"; if (/^category \/ subcategory$/i.test(label)) return CLASS_REF;
+const urAttrOf = label => { if (!label) return ""; if (/^web title$/i.test(label)) return "Product Web Title"; if (/^category \/ subcategory$/i.test(label)) return CLASS_REF;
   if (/^other/i.test(label)) return "Other (describe in notes)"; return attrMeta ? ([...attrMeta.keys()].find(a => norm(a) === norm(label)) || label) : label; };
 
 $("#urBody").addEventListener("input", e => {
@@ -8760,7 +8762,7 @@ function nlRange() {
   return [T - (+nl.preset - 1) * D, T];
 }
 const nlMgrDefault = () => can("cmsubmit") && !can("users") && me().link ? myMgr() : "";   /* category managers start on their own items */
-const nlTitle = i => getVal("Product Web Title_Calc", i) || getVal("Product Title", i);
+const nlTitle = i => getVal("Product Web Title", i) || getVal("Product Title", i);
 async function renderNewList() {
   const B = $("#nlBody"); if (!B) return;
   const who = me().id + "|" + portal; if (nl.who !== who) { nl.who = who; nl.mgr = nlMgrDefault(); nl.page = 0; nl.cat = ""; nl.q = ""; }
@@ -8805,7 +8807,7 @@ function nlExcel() {
   const C = nl.cache, list = nl.list || [], [from, to] = nlRange();
   const head = [nlField().replace(/\s*\(YYYY-MM-DD\)/, ""), "Item Number", "Product Title", "Web Title", "Marketing Brand Name", "Supplier ID", "Supplier", "Product Category", "Product Subcategory", "Category Manager", "Unit Cost", "List Pricing"];
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([head, ...list.map(i => [nlIso(C.days[i]), getVal(PN, i), getVal("Product Title", i), getVal("Product Web Title_Calc", i), getVal("Marketing Brand Name", i), getVal("Supplier ID", i),
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([head, ...list.map(i => [nlIso(C.days[i]), getVal(PN, i), getVal("Product Title", i), getVal("Product Web Title", i), getVal("Marketing Brand Name", i), getVal("Supplier ID", i),
     vendName(getVal("Supplier ID", i)) || getVal("Supplier", i), getVal("Product Category", i), getVal("Product Subcategory", i), getVal("Category Manager", i), getVal("Unit Cost", i), getVal("List Pricing", i)])]), "New items");
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["New items", ""], ["Date used", nlField()], ["From", Number.isFinite(from) ? nlIso(from) : "(any)"], ["To", Number.isFinite(to) ? nlIso(to) : "(any)"], ["Category", nl.cat || "All"], ["Category manager", nl.mgr || "All"], ["Search", nl.q], ["Items", list.length], ["Downloaded", new Date().toLocaleString()], ["By", me().name]]), "About");
   XLSX.writeFile(wb, `new_items_${nlIso(Number.isFinite(from) ? from : Date.now())}_to_${nlIso(Number.isFinite(to) ? to : Date.now())}.xlsx`);
@@ -8939,7 +8941,7 @@ async function runStepConfig(cfg, idxs) {
   r.config = {id: cfg.id, name: cfg.name, purpose: cfg.purpose, notes: R.filter(x => x.note).map(x => x.note), ran: today};
   items.forEach(it => R.forEach(x => { if (x.note || !x.attr) return;
     famStage(it, x.attr, x.value, r);
-    if (x.node) famStage(it, "PIM_Cat_Subcat_concat", `${x.node.cat.name}/${x.node.name}`, r); }));
+    if (x.node) famStage(it, "Category and Subcategory", `${x.node.cat.name}/${x.node.name}`, r); }));
   r.updated = nowISO(); audit("Configuration run", cfg.name, `${items.length} item${items.length === 1 ? "" : "s"} → #${r.id}`); wsSave();
   setStatus(`${cfg.name}: request #${r.id} with ${r.changes.length.toLocaleString()} change${r.changes.length === 1 ? "" : "s"} on ${items.length.toLocaleString()} item${items.length === 1 ? "" : "s"}. Check it and submit for approval.`);
   return r;
