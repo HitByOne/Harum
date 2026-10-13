@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>PIM Viewer</title>
+<title>Harim</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -712,7 +712,7 @@
   body.locked #topstrip, body.locked #nav, body.locked #main, body.locked #ctx, body.locked #launcher { visibility:hidden; }
   .lgCard { width:min(400px, calc(100vw - 32px)); background:var(--surface); color:var(--ink); border-radius:16px; padding:30px 30px 26px; box-shadow:0 24px 60px rgba(0,0,0,.35); margin:24px 0; }
   .lgCard h1 { margin:14px 0 4px; font-size:24px; }
-  .lgLogo { width:52px; height:52px; border-radius:13px; background:var(--bar); color:var(--bar-ink); display:grid; place-items:center; font-weight:800; box-shadow:inset 0 -4px 0 var(--accent); }
+  .lgLogo { width:fit-content; padding:0 16px; font-size:19px; letter-spacing:.3px; height:52px; border-radius:13px; background:var(--bar); color:var(--bar-ink); display:grid; place-items:center; font-weight:800; box-shadow:inset 0 -4px 0 var(--accent); }
   .lgF { display:block; margin-bottom:12px; } .lgF span { display:block; font-size:12.5px; font-weight:600; color:var(--ink-2); margin-bottom:4px; } .lgF .in { width:100%; padding:10px 12px; font-size:14px; }
   .lgKeep { display:flex; gap:6px; align-items:center; font-size:12.5px; color:var(--ink-2); margin:4px 0 14px; }
   .lgErr { background:#c0392b14; color:#c0392b; border-radius:8px; padding:8px 10px; font-size:13px; margin-bottom:12px; }
@@ -753,7 +753,7 @@
 <body>
 
 <!-- ============ sidebar ============ -->
-<header id="topstrip"><div class="brand">PIM<span>viewer</span></div><span id="pageTitle"></span><span id="status">Open Admin &rsaquo; Data Import and choose your export folder. Files are indexed in your browser and never uploaded.</span>
+<header id="topstrip"><div class="brand">Harim<span>product information</span></div><span id="pageTitle"></span><span id="status">Open Admin &rsaquo; Data Import and choose your export folder. Files are indexed in your browser and never uploaded.</span>
   <button id="themeBtn" title="Switch between light and dark"><svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg><span>Dark</span></button>
   <span id="userChip" title="Switch user"></span><div id="userMenu"></div></header>
 <div id="login"><div id="loginBody"></div></div>
@@ -5129,7 +5129,7 @@ function cfgSet(k, v) { const [a, b] = k.split(".");
   else ws[a] = v; }
 function cfgExport() {
   const wb = XLSX.utils.book_new(), F = cfgFieldMap(), G = cfgGroupMap();
-  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["About", "PIM viewer configuration. Load it on Admin > Configuration or through Upload everything."], ["Exported", new Date().toLocaleString()], ["By", me().name],
+  XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["About", "Harim configuration. Load it on Admin > Configuration or through Upload everything."], ["Exported", new Date().toLocaleString()], ["By", me().name],
     [], ["Field names", "Names the app relies on. Fill in 'Mapped to' when the attribute model calls a field something else."], ["Group names", "Same for attribute groups."], ["Settings", "Everything set up on screen. The Value column is JSON; edit in the app when you can."], ["Reports", "Read-only list of the report setups (they load from the Settings sheet)."]]), "About");
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["App name", "Attribute ID", "Group", "Mapped to"], ...KNOWN_FIELDS.map(([n, id, g]) => [n, id, g, F[n] || ""])]), "Field names");
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["App name", "Mapped to"], ...KNOWN_GROUPS.map(n => [n, G[n] || ""])]), "Group names");
@@ -5137,7 +5137,7 @@ function cfgExport() {
   CFG_SETTINGS.forEach(([k, d]) => { const v = cfgGet(k); if (v === undefined) return; const j = JSON.stringify(v); for (let i = 0, p = 1; i < j.length || p === 1; i += 30000, p++) { rows.push([k, p === 1 ? d : "", p, j.slice(i, i + 30000)]); if (i + 30000 >= j.length) break; } });
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), "Settings");
   XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([["Report", "Schedule", "Send to", "Conditions", "Columns", "Split by", "On"], ...rpts().map(r => [r.name, schedText(r), r.to, r.conds.map(condText).join("; "), r.cols.join(", "), r.split || "", r.on ? "Yes" : "No"])]), "Reports");
-  XLSX.writeFile(wb, "PIM_config.xlsx"); audit("Config exported", "PIM_config.xlsx");
+  XLSX.writeFile(wb, "Harim_config.xlsx"); audit("Config exported", "Harim_config.xlsx");
 }
 async function loadConfigFile(f) {
   const wb = XLSX.read(await f.arrayBuffer(), {type: "array"}), sh = n => wb.SheetNames.find(x => normH(x) === normH(n));
@@ -6226,7 +6226,7 @@ function teamRows() {
 }
 function downloadTeam(template) {
   const rows = template ? [["Jane D", "jane@company.com", "Product Data Specialist", "", "Alex Rivera; Jordan Lee", "", "", "New items (Item Load); Single items needing info", "", "Yes"]] : teamRows();
-  download(csvBlob([TEAM_HEAD, ...rows]), template ? "PIM_Team_template.csv" : "PIM_Team.csv");
+  download(csvBlob([TEAM_HEAD, ...rows]), template ? "Harim_Team_template.csv" : "Harim_Team.csv");
 }
 async function loadTeamFile(f) {
   const wb = XLSX.read(await f.arrayBuffer(), {type: "array"}), grid = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {header: 1, raw: false, defval: ""});
@@ -7989,7 +7989,7 @@ function portalNav() {
   document.querySelectorAll("#nav .sep, #navAdmin").forEach(n => n.style.display = portal === "pdm" ? "" : "none");
   $("#navAdmin").style.display = "none";
   document.body.dataset.portal = portal || "launch";
-  const b = $("#topstrip .brand"); if (b) b.innerHTML = `PIM<span>${esc(P ? (P.id === "pdm" ? "Product Data" : P.id === "cm" ? "Cat. Managers" : P.name) : "Apps")}</span>`;
+  const b = $("#topstrip .brand"); if (b) b.innerHTML = `Harim<span>${esc(P ? (P.id === "pdm" ? "Product Data" : P.id === "cm" ? "Cat. Managers" : P.name) : "Apps")}</span>`;
 }
 function enterPortal(id, sec) {
   const P = PORTAL_BY[id]; if (!P || !portalOk(P)) return showLauncher();
@@ -8083,7 +8083,7 @@ function renderLogin() {
   const noPw = !ws.users.some(u => u.pin); if (window.PIM_DEMO && noPw && !lg.user) lg.user = "Administrator"; const u = findUser(lg.user);
   const setting = lg.step === "set";
   $("#loginBody").innerHTML = `<div class="lgCard">
-    <div class="lgLogo">PIM</div><h1>${setting ? "Create your password" : "Sign in"}</h1>
+    <div class="lgLogo">Harim</div><h1>${setting ? "Create your password" : "Sign in"}</h1>
     <div class="muted" style="margin-bottom:18px">${setting ? `First time signing in as <b>${esc(u.name)}</b>. Choose a password; you'll use it from now on.` : "product information"}</div>
     <form id="lgForm" autocomplete="on">
       <label class="lgF"><span>Name or email</span><input class="in" id="lgUser" name="username" autocomplete="username" value="${esc(lg.user)}" ${setting ? "readonly" : "autofocus"} list="lgUsers"></label>
